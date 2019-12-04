@@ -5,6 +5,15 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
+
+/**
+ * Class HomeController
+ * @package App\Controller
+ *
+ * A controller must return a Response Object
+ *
+ */
+
 class HomeController {
 
     /**
