@@ -27,3 +27,11 @@ secondtwig:
 firstautowire:
     path: /firstautowire
     controller: App\Controller\Autowire\FirstAutowireController::index
+
+controllers:
+    resource: '../src/RoutingAnnotations/'
+    type:     annotation
+
+restcontrollers:
+    resource: '../src/RestController/'
+    type:     annotation
