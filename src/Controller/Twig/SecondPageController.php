@@ -13,6 +13,13 @@ class SecondPageController {
     }
 
     public function index() {
+
+        /*
+            $html = $this->twig->load('base.html.twig')->render();
+            $html .= $this->twig->load('templates-1.html.twig')->render();
+            $html .= $this->twig->load('templates-2.html.twig')->render();
+         */
+
         return new Response($this->twig->render("base.html.twig"));
     }
 

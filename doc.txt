@@ -1,0 +1,80 @@
+Command used for creation project 
+
+	composer create-project symfony/website-skeleton symfony-project
+
+Dependencies/Packages added : 
+
+	Twig
+		composer require twig
+	Routing
+		composer require symfony/routing
+	Annotations
+		composer require annotations
+
+
+Create new pages
+
+	Simple page
+
+		Add route définition in routes.yaml
+		Create Controller file
+
+			routes.yaml
+				home:
+					path: /
+					controller:	App\Controller\HomeController::index
+
+			HomeController.php 
+
+				<?php
+
+					namespace App\Controller;
+
+					use Symfony\Component\HttpFoundation\Response;
+
+					class HomeController {
+
+					    public function __construct() {
+
+					    }
+
+					    public function index() {
+					        return new Response('Home page');
+					    }
+
+					}
+
+	Page with Twig Service 
+
+		Add route définition in routes.yaml
+		Create Controller file
+		Add your service in services.yaml
+
+			routes.yaml
+
+				first:
+				    path: /first
+				    controller: App\Controller\Twig\FirstController:index
+
+			services.yaml
+				# Create service for first page with twig injection in $twig
+				    App\Controller\Twig\FirstPageController:
+				        tags: ['controller.service_arguments']
+				        arguments:
+				            $twig: '@twig'
+
+
+
+Les Services dans Symfony sont des classes qui seront chargé par Symfony
+
+Lister l'ensemble des services disponible : 
+
+	php bin/console debug:container
+
+	Service Twig : 
+		twig Twig\Environment
+
+Services.yaml : Définir des services et comment ils doivent être instancier
+Un Controlleur est lui même un service
+
+	On va donc définir un service HomeController avec comme arguments Twig
