@@ -1,0 +1,33 @@
+.section {
+    position: relative;
+    width: 1140px;
+    margin: 0 auto;
+}
+
+.section.section-1 {
+    text-align: center;
+}
+
+.section.section-1 h1 {
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 3em;
+    text-align: center;
+    margin: 20px auto;
+    line-height: 60px;
+    color: #212529;
+}
+
+.section.section-1 img {
+    position: relative;
+    width: 50%;
+    height: auto;
+}
+
+.section.section-1 p.section-1-content {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 20px;
+    line-height: 25px;
+    color: #5d5d5d;
+}

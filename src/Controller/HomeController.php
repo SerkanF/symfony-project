@@ -3,15 +3,21 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 class HomeController {
 
-    public function __construct() {
+    /**
+     * @var Environment
+     */
+    private $twig;
 
+    public function __construct(Environment $twig) {
+        $this->twig = $twig;
     }
 
     public function index() {
-        return new Response('Index page');
+        return new Response($this->twig->render('content/template-1.html.twig'));
     }
 
     public function home() {
