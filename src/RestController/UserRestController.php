@@ -2,10 +2,14 @@
 
 namespace App\RestController;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserRestController {
+class UserRestController  {
 
     public function __construct() {
 
@@ -15,7 +19,7 @@ class UserRestController {
      * @Route(path="/users", methods={"GET"})
      * @return JsonResponse
      */
-    public function getClients() : JsonResponse {
+    public function getUsers() : JsonResponse {
 
         $users = array(
             [
