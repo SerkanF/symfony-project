@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AglUserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class AglUser implements UserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -28,14 +28,15 @@ class AglUser implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $userName;
+    private $username;
 
     public function getId(): ?int
     {
@@ -86,9 +87,16 @@ class AglUser implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword()
+    public function getPassword(): string
     {
-        // not needed for apps that do not check user passwords
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
     }
 
     /**
@@ -96,7 +104,7 @@ class AglUser implements UserInterface
      */
     public function getSalt()
     {
-        // not needed for apps that do not check user passwords
+        // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
     /**
@@ -108,16 +116,9 @@ class AglUser implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function setPassword(string $password): self
+    public function setUsername(string $username): self
     {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function setUserName(string $userName): self
-    {
-        $this->userName = $userName;
+        $this->username = $username;
 
         return $this;
     }
