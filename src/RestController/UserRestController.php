@@ -9,6 +9,11 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class GroupAnnotation
+ * @package App\RoutingAnnotations
+ * @Route(path="/api")
+ */
 class UserRestController  {
 
     public function __construct() {
