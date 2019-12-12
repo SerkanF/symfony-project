@@ -21,10 +21,16 @@ class UserRestController  {
     }
 
     /**
-     * @Route(path="/users", methods={"GET"})
+     * @Route(path="/users", methods={"GET"}, )
      * @return JsonResponse
      */
     public function getUsers() : JsonResponse {
+
+        $response = new JsonResponse();
+
+        $response->headers->set('Content-Type', 'application/json');
+        // Allow all websites
+        $response->headers->set('Access-Control-Allow-Origin', '*');
 
         $users = array(
             [
@@ -37,7 +43,9 @@ class UserRestController  {
             ]
         );
 
-        return new JsonResponse($users);
+        $response->setData($users);
+
+        return $response;
 
     }
 
