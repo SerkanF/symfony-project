@@ -1,11 +1,11 @@
 import { browser, by, element } from 'protractor';
 
-export class AppPage {
-  navigateTo() {
-    return browser.get(browser.baseUrl) as Promise<any>;
-  }
+export class FusePage {
+    navigateTo(): any {
+        return browser.get('/');
+    }
 
-  getTitleText() {
-    return element(by.css('app-root .content span')).getText() as Promise<string>;
-  }
+    getParagraphText(): any {
+        return element(by.css('app #main')).getText();
+    }
 }
