@@ -6,11 +6,11 @@ use App\Entity\AglUser;
 use App\Entity\User;
 use App\Form\UserFormRegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Psr\Log\LoggerInterface;
@@ -20,6 +20,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/register", name="app_register")
+     * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
      */
     public function register(Request $request, LoggerInterface $logger, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder): Response
     {
@@ -53,6 +54,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/login", name="app_login")
+     * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {

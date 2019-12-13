@@ -34,15 +34,3 @@ services:
     # Define service of Controller/Twig/FirstPageController.php
     # Provide the argument $twig in constructor
     # Use the same name
-
-    # Create service for first page with twig injection in $twig
-    App\Controller\Twig\FirstPageController:
-        tags: ['controller.service_arguments']
-        arguments:
-            $twig: '@twig'
-
-    # Create service for second page with twig injection in $twig
-    App\Controller\Twig\SecondPageController:
-        tags: ['controller.service_arguments']
-        arguments:
-            $twigArgument: '@twig'

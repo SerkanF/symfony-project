@@ -5,33 +5,3 @@
 # Define route home
 # URL :
 # PHP file : HomeController.php
-default:
-    path: /
-    controller: App\Controller\HomeController::index
-
-home:
-    path: /home
-    controller: App\Controller\HomeController::home
-
-# Define route firsttwig
-# URL : /firsttwig
-# PHP file : FirstPageController.php
-firsttwig:
-    path: /firsttwig
-    controller: App\Controller\Twig\FirstPageController::index
-
-secondtwig:
-    path: /secondtwig
-    controller: App\Controller\Twig\SecondPageController::index
-
-firstautowire:
-    path: /firstautowire
-    controller: App\Controller\Autowire\FirstAutowireController::index
-
-controllers:
-    resource: '../src/RoutingAnnotations/'
-    type:     annotation
-
-restcontrollers:
-    resource: '../src/RestController/'
-    type:     annotation
