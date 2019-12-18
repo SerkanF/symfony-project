@@ -15,6 +15,4 @@ class HomeController extends AbfFrontAbstractController {
         return $this->render('front-end/base.html.twig');
     }
 
-
-
 }

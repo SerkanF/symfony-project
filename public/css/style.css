@@ -1,114 +1,132 @@
 body {
-    background-color: #f7f7f7;
+    background-color: #111111!important;
 }
+
+.main {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+.navigation {
+    color: white;
+    font-size: 18px;
+    font-family: "Barlow Condensed";
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 15px 20px;
+    /*padding: 30px 20px;*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.navigation ul {
+
+}
+
+.navigation ul li {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 10px 15px;
+}
+
+.navigation ul li.nav-items {
+    float: right;
+    line-height: 60px;
+}
+
+.navigation ul li a {
+    color: white;
+    position: relative;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.navigation ul li.nav-items a:after {
+    display: block;
+    background-color: #f04923;
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    content: '';
+    width: 0;
+    height: 2px;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    -ms-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+}
+
+.navigation ul li.nav-items a:hover:after {
+    width: 100%;
+}
+
+.navigation ul li.nav-items a:hover, .navigation ul li.nav-items a.active {
+    color: #f04923;
+}
+
 
 /**
     SECTIONS 1
  */
 
-.section {
+.section-1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
-    width: 1140px;
-    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    background-image: url("/img/291772.jpg");
+    background-position: center;
+    background-size: cover;
 }
 
-.section.section-1 {
-    text-align: center;
+.section-1 .section-content {
+    flex: 1;
+    margin-left: 10%;
 }
 
-.section.section-1 h1 {
-    text-transform: uppercase;
-    font-weight: 800;
-    font-size: 3em;
-    text-align: center;
-    margin: 20px auto;
-    line-height: 60px;
-    color: #212529;
-}
-
-.section.section-1 img {
-    position: relative;
-    width: 50%;
-    height: auto;
-}
-
-.section.section-1 p.section-1-content {
-    width: 70%;
-    margin: 0 auto;
-    margin-top: 20px;
-    line-height: 25px;
-    color: #5d5d5d;
-}
-
-/**
-    SECTION 2
- */
-
-.section-2 .section-2-title {
-    text-transform: uppercase;
-    font-weight: 800;
-    font-size: 3em;
-    text-align: center;
-    margin: 20px auto;
-    line-height: 60px;
-    color: #212529;
-}
-
-.section-2 .princing-card {
-    text-align: center;
-    width: 28%;
-    border: 15px solid white;
-    display: inline-block;
-    margin: 10px;
-}
-
-.section-2 .princing-card .princing-card-header {
-    border-bottom: 10px solid white;
-    padding: 20px 0px;
-}
-.section-2 .princing-card .princing-card-header .label {
-    font-size: 1.75rem;
-    margin: 5px 0;
-}
-
-.section-2 .princing-card .princing-card-header .description {color: #5d5d5d;margin: 10px 0;}
-
-.section-2 .princing-card .princing-card-header .price {
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin: 5px 0px;
-}
-
-.section-2 .princing-card .princing-card-content {
-    padding: 30px 0px;
-}
-
-.section-2 .princing-card .princing-card-content .items {
-    padding: 5px;
-    color: #5d5d5d;
-}
-
-.section-2 .princing-card .princing-card-buttons {
-    text-align: center;
-    padding: 0px 0px 25px 0px;
-}
-
-.section-2 .princing-card .princing-card-buttons .btn-princing-card {
-    background-color: black;
-    border: 1px solid black;
+.section-1 h1 {
+    font-family: "Barlow Condensed";
     color: white;
-    padding: 10px 30px;
-    border-radius: 3px;
+    font-size: 60px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 20px 10px;
 }
 
-.section-2 .princing-card .princing-card-buttons .btn-princing-card:hover {
+.section-1 .text-wrapper {
+    position: relative;
+    color: white;
+    font-family: "Barlow Condensed";
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 1.2px;
+    padding: 10px 10px 30px 10px;
+    line-height: 30px;
+}
+
+.section-1 .link {
+    position: relative;
+    padding: 20px 30px;
     background-color: white;
-    color: black;
-    transition: all 0.3s;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: "Barlow Condensed";
+    font-size: 20px;
+    letter-spacing: 0.9px;
+    border-radius: 30px;
     cursor: pointer;
-    border: 1px solid #676767;
 }
 
-.section-2 .princing-card .princing-card-buttons .btn-princing-card:focus {
-    outline: none;
+.section-1 .link:hover {
+    background-color: #f04923;
+    color: white;
+    transition: background-color 0.2s, color 0.2s;
 }
