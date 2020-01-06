@@ -33,6 +33,19 @@
     {% endblock %}
 </div>
 
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+
+    <script src="http://www.dynamicpress.eu/envato/activia_main/wp-content/cache/busting/1/envato/activia_main/wp-includes/js/jquery/jquery-1.12.4-wp.js"></script>
+    <script src="https://nicescroll.areaaperta.com/wp-content/plugins/jnicescroll/js/jquery.nicescroll.min.js"></script>
+
+    <script>
+
+        (function($) {
+            $(".main").niceScroll();
+        })(jQuery);
+
+    </script>
+
+{% endblock %}
 </body>
 </html>
