@@ -9,6 +9,15 @@ body {
     z-index: 1;
 }
 
+.w-33 {
+    width: 33%;
+}
+
+.w-70-p { width: 70%!important; }
+.w-80-p { width: 80%!important; }
+.w-100-p { width: 100%!important; }
+
+
 .clear {
     clear: both;
 }

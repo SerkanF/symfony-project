@@ -15,4 +15,12 @@ class HomeController extends AbfFrontAbstractController {
         return $this->render('front-end/base.html.twig');
     }
 
+    /**
+     * @Route(path="/resume")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function resume() {
+        return $this->render('front-end/resume.html.twig');
+    }
+
 }
