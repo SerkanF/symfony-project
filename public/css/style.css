@@ -42,6 +42,7 @@ div.button .link {
     text-transform: uppercase;
     font-weight: 700;
     font-family: "Barlow Condensed";
+    color: rgb(40,40,40);
     font-size: 20px;
     letter-spacing: 0.9px;
     border-radius: 30px;
@@ -70,6 +71,7 @@ div.small-button .link {
     letter-spacing: 0.9px;
     border-radius: 30px;
     cursor: pointer;
+    color: rgb(40,40,40);
 }
 
 div.small-button .link:hover {
