@@ -1,3 +1,11 @@
+/**
+    RESUME CSS
+ */
+
+/**
+    HEADER
+ */
+
 .resume-header {
     width: 90%;
     margin: 0 auto;
@@ -10,7 +18,7 @@
     position: relative;
     float: left;
     height: 100%;
-    width: calc(30% - 60px);
+    width: calc(33.33% - 60px);
     overflow: hidden;
     padding: 30px;
 }
@@ -19,7 +27,8 @@
     position: relative;
     height: 100%;
     float: left;
-    width: 30%;
+    width: calc(33.33% - 60px);
+    padding: 30px;
     overflow: hidden;
     background-image: url('/img/resume/profil-picture.jpg');
     background-size: cover;
@@ -27,7 +36,7 @@
 }
 
 .resume-header-skills {
-    width: calc(30% - 60px);
+    width: calc(33.33% - 60px);
     float: left;
     padding: 30px;
 }
@@ -117,4 +126,132 @@
     right: 15px;
     border-top: none;
     border-left: none;
+}
+
+/**
+    EXPERIENCES
+ */
+
+.experiences {
+    width: 90%;
+    margin: 0 auto;
+    height: 80%;
+    margin-top: 111px;
+    color: white;
+    font-family: "Barlow Condensed";
+}
+
+.experiences h1 {
+    font-size: 3em;
+    font-family: "Barlow Condensed";
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+    padding: 15px 15px 40px 15px;
+}
+
+.experiences-main {
+    height: 80%;
+    position: relative;
+}
+
+.vertical-line {
+    height: 100%;
+    background-color: white;
+    width: 3px;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    border-radius: 15px;
+}
+
+.header-experience {
+    text-align: left;
+    background-color: orangered;
+    padding: 15px;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.experience-description {
+    border: 1px solid orangered;
+    padding: 10px;
+    font-size: 1.2em;
+    letter-spacing: 0.7px;
+    line-height: 1.3em;
+}
+
+.experience-left, .experience-right {
+    position: absolute;
+    top: 50px;
+    padding: 15px;
+    margin-right: 25px;
+}
+
+.experience-left {
+    right: 50%;
+    left: 25%;
+    top: 50px;
+    margin-right: 25px;
+}
+
+.experience-right {
+    left: 50%;
+    right: 25%;
+    top: 50px;
+    margin-left: 25px;
+}
+
+.circle {
+    padding: 8px;
+    background-color: orangered;
+    border-radius: 15px;
+    top: 9px;
+}
+
+.rightTriangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 25px 25px 0 0;
+    border-color: orangered transparent transparent transparent;
+    position: absolute;
+    right: -10px;
+}
+
+.leftTriangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 25px 25px 0;
+    border-color: transparent orangered transparent transparent;
+    position: absolute;
+    left: -10px;
+}
+
+.experience-left .circle {
+    position: absolute;
+    right: -35px;
+    top: 9px;
+}
+
+.experience-right .circle {
+    position: absolute;
+    left: -31px;
+    padding: 8px;
+    background-color: orangered;
+    border-radius: 15px;
+    top: 9px;
+}
+
+.experience-1 {
+    top: 29px;
+}
+
+.experience-2 {
+    top: 119px;
 }
