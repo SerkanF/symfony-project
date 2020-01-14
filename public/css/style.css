@@ -2,6 +2,10 @@ body {
     background-color: #111111!important;
 }
 
+body.resume {
+    background-color: rgb(25, 25, 25)!important;
+}
+
 .main {
     position: relative;
     height: 100%;
