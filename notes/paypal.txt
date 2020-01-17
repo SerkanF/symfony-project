@@ -1,0 +1,47 @@
+
+https://developer.paypal.com/docs/checkout/integrate/
+
+https://developer.paypal.com/docs/checkout/reference/server-integration/set-up-transaction/
+https://developer.paypal.com/docs/checkout/reference/server-integration/capture-transaction/
+
+https://developer.paypal.com/docs/api/orders/v2/#orders_get
+
+sb-kshqo899389@personal.example.com
+6u3n0$-I
+
+
+Get TOKEN to use Paypal API : 
+
+	https://api.sandbox.paypal.com/v1/oauth2/token
+
+	Minimal Headers : 
+		Authorization : Basic (use client and secret keys)
+	Body request : 
+		type : x-www-form-urlencoded
+		Parameters : 
+			grant_type : client_credentials
+
+
+Orders API
+Order = Représente un paiement entre deux ou plusieurs parties. Utilisez l'API Orders pour créer, mettre à jour, récupérer, autoriser et capturer des commandes
+
+Invoices API
+API de facturation
+
+Dispute : Gérer les litiges
+
+Identity API
+Permettre aux utilisateurs de se connecter avec Paypal
+
+
+Payments API
+Appelez l'API Payments pour autoriser les paiements, capturer les paiements autorisés, rembourser les paiements qui ont déjà été capturés et afficher les informations de paiement. Utilisez l'API Payments conjointement avec l'API Orders. Pour plus d'informations, consultez la vue d'ensemble de la validation de PayPal
+
+Subscriptions API
+Gérer les abonnements
+
+Vault API
+Stocker les cartes de crédits
+
+Webhooks Management API
+Gérer des notifications d'event
