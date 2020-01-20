@@ -1,4 +1,6 @@
 
+https://developer.paypal.com/developer/applications/
+
 https://developer.paypal.com/docs/checkout/integrate/
 
 https://developer.paypal.com/docs/checkout/reference/server-integration/set-up-transaction/
@@ -32,7 +34,6 @@ Dispute : Gérer les litiges
 
 Identity API
 Permettre aux utilisateurs de se connecter avec Paypal
-
 
 Payments API
 Appelez l'API Payments pour autoriser les paiements, capturer les paiements autorisés, rembourser les paiements qui ont déjà été capturés et afficher les informations de paiement. Utilisez l'API Payments conjointement avec l'API Orders. Pour plus d'informations, consultez la vue d'ensemble de la validation de PayPal

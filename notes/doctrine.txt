@@ -1,0 +1,15 @@
+Doctrine : 
+
+	Create table : 
+
+		php bin/console make:entity
+
+	Generate script 
+
+		php bin/console make:migration
+
+		This command will generate the migration file : "src/Migrations/Version20180207231217.php
+
+	Update database : 
+
+		php bin/console doctrine:migrations:migrate
