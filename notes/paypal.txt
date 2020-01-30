@@ -1,3 +1,5 @@
+Get money from paypal to bank account
+https://www.paypal.com/fr/smarthelp/article/comment-recevoir-de-l'argent--faq1750
 
 https://developer.paypal.com/developer/applications/
 
