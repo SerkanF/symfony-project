@@ -6,108 +6,61 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.1.0/mustache.min.js"></script>
 
-    <script src="https://www.paypal.com/sdk/js?client-id=AQR4PDcURVeSjKXS0BvwY9tLkvJFImt8oIBH6drbTo_cwB27rwGHzO7tEIEVH2D2eaJtTuCxKkD9D6sx"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AQXZDyBPOGjI6huIgbM4eaXbQal_8V0JluqiYe_knnvsIRYHFNDQG7oTCj0PpQcgE6gKFd0ZnBUroIBI"></script>
 </head>
 
 <body>
 
     <h1>Paypal trash page</h1>
 
+    <button onclick="AglPaypal.getOrder()">Create paypal button</button>
+
     <div id="paypal-button-container"></div>
 
     <div id="target"></div>
 
-    {% verbatim %}
-        <script id="template" type="x-tmpl-mustache">
-          {{#products}}
-              <div onclick="renderButton('{{name}}', '{{price}}')">
-                    <h1>{{name}}</h1>
-                <h1>{{id}}</h1>
-                <h1>{{description}}</h1>
-              </div>
-          {{/products}}
-        </script>
-    {% endverbatim %}
-
     <script>
 
-        function renderButton(id, price) {
-            paypal.Buttons({
-                createOrder : function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: price
-                            }
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        console.log('Transaction completed by ' + details.payer.name.given_name);
-                        console.log("Create in database order");
-                    });
-                }
-            }).render('#paypal-button-container');
-        }
+        let AglPaypal = {
 
-        function renderHello(json) {
-            console.log("renderHello");
-            var template = document.getElementById('template').innerHTML;
-            // Mustache.tags = [ '[[', ']]' ];
-            var rendered = Mustache.render(template, { products : json });
-            document.getElementById('target').innerHTML = rendered;
-        }
+            product : null,
 
-        fetch('/api/products', {
-            method : 'GET',
-            headers : {
-                'content-type' : 'application/json'
-            }
-        }).then(value => {
-            return value.json()
-        })
-        .then(json => {
-            renderHello(json);
-            console.log(json);
-        });
+            renderButton : function(id, price) {
 
+                let self = this;
 
-
-        /*
-                createOrder: function() {
-                  return fetch('/my-server/create-paypal-transaction', {
-                    method: 'post',
-                    headers: {
-                      'content-type': 'application/json'
+                paypal.Buttons({
+                    createOrder : function(data, actions) {
+                        return actions.order.create(self.product);
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            console.log('Transaction completed by ' + details.payer.name.given_name);
+                            console.log("Create in database order");
+                        });
                     }
-                  }).then(function(res) {
-                    return res.json();
-                  }).then(function(data) {
-                    return data.orderID; // Use the same key name for order ID on the client and server
-                  });
-                }
+                }).render('#paypal-button-container');
+            },           
 
+            getOrder : function() {
 
+                let self = this;
 
+                fetch('/api/paypal/create', {
+                    method : 'GET',
+                    headers : {
+                        'content-type' : 'application/json'
+                    }
+                }).then(value => {
+                    return value.json()
+                })
+                .then(json => {
+                    self.product = json;
+                    self.renderButton();
+                });
 
-            paypal.Buttons({
-                createOrder : function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: '0.01'
-                            }
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        console.log('Transaction completed by ' + details.payer.name.given_name);
-                        console.log("Create in database order");
-                    });
-                }
-            }).render('#paypal-button-container');*/
+            }
+        }
 
     </script>
 
