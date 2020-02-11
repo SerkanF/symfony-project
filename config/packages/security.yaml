@@ -18,6 +18,7 @@ security:
 
         main:
             anonymous: lazy
+            http_basic : ~
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator

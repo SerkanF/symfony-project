@@ -17,17 +17,7 @@
 
     <div id="target"></div>
 
-    {% verbatim %}
-        <script id="template" type="x-tmpl-mustache">
-          {{#products}}
-              <div onclick="renderButton('{{name}}', '{{price}}')">
-                    <h1>{{name}}</h1>
-                <h1>{{id}}</h1>
-                <h1>{{description}}</h1>
-              </div>
-          {{/products}}
-        </script>
-    {% endverbatim %}
+
 
     <script>
 
@@ -37,29 +27,20 @@
                     return actions.order.create({
                         purchase_units: [{
                             amount: {
-                                value: price
+                                value: '10.01'
                             }
                         }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        console.log('Transaction completed by ' + details.payer.name.given_name);
-                        console.log("Create in database order");
                     });
                 }
             }).render('#paypal-button-container');
         }
 
-        function renderHello(json) {
-            console.log("renderHello");
-            var template = document.getElementById('template').innerHTML;
-            // Mustache.tags = [ '[[', ']]' ];
-            var rendered = Mustache.render(template, { products : json });
-            document.getElementById('target').innerHTML = rendered;
-        }
+        renderButton();
 
-        fetch('/api/products', {
+        /*
+
+
+            fetch('/api/products', {
             method : 'GET',
             headers : {
                 'content-type' : 'application/json'
@@ -71,10 +52,6 @@
             renderHello(json);
             console.log(json);
         });
-
-
-
-        /*
                 createOrder: function() {
                   return fetch('/my-server/create-paypal-transaction', {
                     method: 'post',

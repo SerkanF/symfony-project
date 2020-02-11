@@ -34,7 +34,6 @@ class ProductRestController extends AbfFrontAbstractController {
 
     /**
      * @Route(path="/products", methods={"GET"})
-     * @param Serializer $serializer
      * @return JsonResponse
      */
     public function getProducts() : JsonResponse {
