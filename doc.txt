@@ -1,3 +1,5 @@
+Activer l'extension : pdo_pgsql
+
 Command used for creation project 
 
 	composer create-project symfony/website-skeleton symfony-project

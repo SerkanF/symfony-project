@@ -43,24 +43,21 @@ class UserRestController extends AbfFrontAbstractController {
      */
     public function getUsers() : JsonResponse {
 
+        $connexion = $this->getDoctrine()->getConnection("fnaccount");
+
+        $sql = "SELECT * FROM accounts LIMIT 1000 OFFSET 0";
+
+        $stmt = $connexion->prepare($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll();
+        $connexion->close();
+
         $response = new JsonResponse();
 
         $response->headers->set('Content-Type', 'application/json');
-        // Allow all websites
         $response->headers->set('Access-Control-Allow-Origin', '*');
 
-        $users = array(
-            [
-                'id' => 1,
-                'data' => 'Sow Brahim'
-            ],
-            [
-                'id' => 2,
-                'data' => 'Hanma Baki'
-            ]
-        );
-
-        $response->setData($users);
+        $response->setData($data);
 
         return $response;
 

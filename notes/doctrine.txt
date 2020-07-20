@@ -13,3 +13,8 @@ Doctrine :
 	Update database : 
 
 		php bin/console doctrine:migrations:migrate
+
+
+postgres
+pwd root
+port 5432
