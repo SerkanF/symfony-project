@@ -26,4 +26,12 @@ class HomeController extends AbfFrontAbstractController {
         return $this->render('front-end/resume.html.twig');
     }
 
+    /**
+     * @Route(path="/home")
+     * @return 
+     */
+    public function homeEden() {
+        return $this->render('front-end/eden/base.html.twig');
+    }
+
 }

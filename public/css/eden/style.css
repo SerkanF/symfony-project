@@ -1,0 +1,240 @@
+/**
+    NAV
+ */
+
+.header {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-color: #111111!important;
+    height: 55px;
+}
+
+ .navigation {
+    color: white;
+    font-size: 18px;
+    font-family: "Barlow Condensed";
+    text-transform: uppercase;
+    font-weight: 600;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    width: 1080px;
+    margin: 0 auto;
+}
+
+.navigation ul {
+
+}
+
+.navigation ul li {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0px 15px;
+}
+
+.navigation ul li.nav-items {
+    float: left;
+    line-height: 50px;
+}
+
+.navigation ul li.nav-items.right {
+    float: right;
+}
+
+.navigation ul li a {
+    color: white;
+    position: relative;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.navigation ul li.nav-items a:after {
+    display: block;
+    background-color: rgb(112,204,203);
+    position: absolute;
+    bottom: -7px;
+    left: 0;
+    content: '';
+    width: 0;
+    height: 2px;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    -ms-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+}
+
+.navigation ul li.nav-items a:hover:after {
+    width: 100%;
+}
+
+.navigation ul li.nav-items a:hover, .navigation ul li.nav-items a.active {
+    color: rgb(112,204,203);
+}
+
+/**
+    FOOTE
+*/
+
+.footer {
+    position: fixed;
+    height: 55px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    background-color: #111111!important;
+}
+
+.footer-content {
+    position: relative;
+    width: 1080px;
+    margin: 0 auto;
+    color: white;
+    font-family: "Barlow Condensed";
+    font-weight: 600;
+}
+
+.footer-content ul li.first {
+    padding: 0px 0px 0px 0px;
+}
+
+.footer-content ul li {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0px 15px;
+    font-size: 18px;
+}
+
+.footer-content ul li.footer-items {
+    float: left;
+    line-height: 60px;
+}
+
+.footer-content ul li.nav-items.right {
+    float: right;
+}
+
+/**
+    MAIN IMG
+*/
+
+.main {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    bottom: 55px;
+    top: 55px;
+}
+
+.main-img {
+    position: absolute;
+    top: 55px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(/img/eden/background-header.jpg);
+    background-size: cover;
+    background-position: 0px -160px;
+    background-repeat: no-repeat;
+}
+
+.main-content {
+    position: relative;
+    width: 1080px;
+    margin: 0 auto;
+    top: 150px;
+    background-color: white;
+    height: auto;
+    overflow: hidden;
+    opacity: 0.9;
+    margin-bottom: 50px;
+}
+
+p {
+    margin: 10%;
+}
+
+.top-box, .bottom-box {
+    position: absolute;
+    height: 8px;
+    left: 0;
+    right: 0;
+}
+
+.top-box {
+    top : 0;
+}
+
+.bottom-box {
+    bottom: 0;
+}
+
+.corner {
+    width: 8px;
+    height: 8px;
+    position: absolute;
+}
+
+.top-left-corner-box {
+    background-image: url(/img/eden/top-left-box.png);
+    top: 0;
+    left: 0;
+}
+
+.top-right-corner-box {
+    background-image: url(/img/eden/top-right-box.png);
+    top: 0;
+    right: 0;
+}
+
+.bottom-left-corner-box {
+    background-image: url(/img/eden/bottom-left-box.png);
+    bottom: 0;
+    left: 0;
+}
+
+.bottom-right-corner-box {
+    background-image: url(/img/eden/bottom-right-box.png);
+    bottom: 0;
+    right: 0;
+}
+
+.border-box {
+    position: absolute;
+}
+
+.bottom-border-box {
+    background-image: url(/img/eden/bottom-border-box.png);
+    bottom: 0;
+    left: 8px;
+    right: 8px;
+    height: 4px;
+}
+
+.top-border-box {
+    background-image: url(/img/eden/top-border-box.png);
+    top: 0;
+    left: 8px;
+    right: 8px;
+    height: 4px;
+}
+
+.left-border-box {
+    background-image: url(/img/eden/left-border-box.png);
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 4px;
+}
+
+.right-border-box {
+    background-image: url(/img/eden/right-border-box.png);
+    right: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 4px;
+}

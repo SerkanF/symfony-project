@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    {% block stylesheets %}{% endblock %}
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i">
+    <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/eden/style.css">
+
+</head>
+<body>
+
+{% block header %}
+    
+    <div class="header">
+        {% include 'front-end/eden/navgiation/navigation.html.twig' %}
+    </div>
+
+    <div class="main-img">
+        
+    </div>
+
+{% endblock %}
+
+<div class="main">
+    {% block body %}
+
+        <div class="main-content">
+
+            <div class="corner top-left-corner-box"></div>
+            <div class="corner top-right-corner-box"></div>
+            <div class="corner bottom-left-corner-box"></div>
+            <div class="corner bottom-right-corner-box"></div>
+
+            <div class="border-box top-border-box"></div>
+            <div class="border-box bottom-border-box"></div>
+            <div class="border-box left-border-box"></div>
+            <div class="border-box right-border-box"></div>
+            
+            <p>En construction</p>
+                
+        </div>
+
+    {% endblock %}
+</div>
+
+<div class="footer">
+
+    {% include 'front-end/eden/footer/footer.html.twig' %}
+
+</div>
+
+{% block javascripts %}
+
+    <script src="http://www.dynamicpress.eu/envato/activia_main/wp-content/cache/busting/1/envato/activia_main/wp-includes/js/jquery/jquery-1.12.4-wp.js"></script>
+    <script src="https://nicescroll.areaaperta.com/wp-content/plugins/jnicescroll/js/jquery.nicescroll.min.js"></script>
+
+    <script>
+
+        (function($) {
+            $(".main").niceScroll();
+        })(jQuery);
+
+    </script>
+
+{% endblock %}
+</body>
+</html>
