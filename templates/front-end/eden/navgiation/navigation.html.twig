@@ -3,16 +3,28 @@
     <ul>
 
         <li class="nav-items">
-            <a href="">Accueil</a>
-        </li>
-        
-        <li class="nav-items right">
-            <a href="">Se connecter</a>
+            <a href="/home">Accueil</a>
         </li>
 
-        <li class="nav-items right">
-            <a href="">Créer un compte</a>
-        </li>
+
+        {% if user is defined and  user['username'] is defined and  user['username'] != null %}
+
+            <li class="nav-items right">
+                <a href="/logout">Se déconnecter</a>
+            </li>
+
+            <li class="nav-items right">
+                <a href="/account">Mon compte ({{ user['username'] }})</a>
+            </li>
+        {% else %}
+            <li class="nav-items right">
+                <a href="">Créer un compte</a>
+            </li>
+
+            <li class="nav-items right">
+                <a href="/login">Se connecter</a>
+            </li>
+        {% endif %}
     </ul>
 
 </nav>

@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Form\UserFormRegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,8 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Psr\Log\LoggerInterface;
 
-class SecurityController extends AbstractController
-{
+class SecurityController extends AbfFrontAbstractController {
 
     /**
      * @Route("/register", name="app_register")
@@ -45,10 +43,14 @@ class SecurityController extends AbstractController
 
         echo "</pre>";
 
+        $this->data['form'] = $form->createView();
 
+        return $this->renderCustomView('security/register.html.twig');
+
+        /*
         return $this->render('security/register.html.twig', [
             'form' => $form->createView()
-        ]);
+        ]);*/
 
     }
 
@@ -58,24 +60,21 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+        if ($this->getUser()) {
+             return $this->redirectToRoute('home');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-    }
+        $this->data['last_username'] = $lastUsername;
+        $this->data['error'] = $error;
 
-    /**
-     * @Route("/login.do", name="login_angular")
-     */
-    public function loginAngular(): Response
-    {
-        return $this->render('base.html.twig');
+        return $this->renderCustomView('security/login.html.twig');
+
+        // return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
@@ -83,6 +82,8 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
-        throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
+        
+//        throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
+        return $this->renderCustomView('home');
     }
 }

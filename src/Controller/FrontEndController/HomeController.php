@@ -15,7 +15,7 @@ class HomeController extends AbfFrontAbstractController {
      * @return Response
      */
     public function index() {
-        return $this->render('front-end/base.html.twig');
+        return $this->renderCustomView('front-end/base.html.twig');
     }
 
     /**
@@ -23,15 +23,15 @@ class HomeController extends AbfFrontAbstractController {
      * @return Response
      */
     public function resume() {
-        return $this->render('front-end/resume.html.twig');
+        return $this->renderCustomView('front-end/resume.html.twig');
     }
 
     /**
-     * @Route(path="/home")
+     * @Route(path="/home", name="home")
      * @return 
      */
     public function homeEden() {
-        return $this->render('front-end/eden/base.html.twig');
+        return $this->renderCustomView('front-end/eden/base.html.twig');
     }
 
 }
