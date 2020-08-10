@@ -160,10 +160,6 @@ class UserRestController extends AbfFrontAbstractController {
 
         $responseData = json_decode($verifyResponse);
 
-        if(!$responseData->success) {
-            $this->errors['Captcha'] = Tools::displayError('##InvalidCaptcha##');
-        }
-
         $response = new JsonResponse();
         $resp->setErrorCode(503);
         $resp->setMessage("Votre compte a été créé. Un mail de confirmation vous a été envoyé !");
