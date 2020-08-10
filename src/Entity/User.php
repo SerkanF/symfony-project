@@ -38,6 +38,21 @@ class User implements UserInterface, \JsonSerializable
      */
     private $username;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $idAccount;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $keyConfirmation;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isConfirmed;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,19 +70,11 @@ class User implements UserInterface, \JsonSerializable
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUsername(): string
     {
         return (string) $this->username;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -90,9 +97,6 @@ class User implements UserInterface, \JsonSerializable
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getPassword(): string
     {
         return (string) $this->password;
@@ -105,17 +109,11 @@ class User implements UserInterface, \JsonSerializable
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getSalt()
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
@@ -128,6 +126,15 @@ class User implements UserInterface, \JsonSerializable
 
         return $this;
     }
+
+    public function getIdAccount() { return $this->idAccount; }
+    public function setIdAccount($idAccount) { return $this->idAccount = $idAccount; }
+
+    public function getKeyConfirmation() { return $this->keyConfirmation; }
+    public function setKeyConfirmation($keyConfirmation) { return $this->keyConfirmation = $keyConfirmation; }
+
+    public function getIsConfirmed() { return $this->isConfirmed; }
+    public function setIsConfirmed($isConfirmed) { return $this->isConfirmed = $isConfirmed; }
 
     /**
      * Specify data which should be serialized to JSON
@@ -142,7 +149,10 @@ class User implements UserInterface, \JsonSerializable
             'id' => $this->id,
             'username' => $this->username,
             'email' => $this->email,
-            'password'  => $this->password
+            'password'  => $this->password,
+            'idaccount' => $this->idAccount,
+            'keyconfirmation' => $this->keyConfirmation,
+            'isconfirmed' => $this->isConfirmed
         ];
     }
 }

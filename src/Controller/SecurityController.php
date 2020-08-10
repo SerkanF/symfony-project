@@ -17,7 +17,7 @@ use Psr\Log\LoggerInterface;
 class SecurityController extends AbfFrontAbstractController {
 
     /**
-     * @Route("/register", name="app_register")
+     * @Route("/registerapp", name="app_register")
      * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
      */
     public function register(Request $request, LoggerInterface $logger, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder): Response

@@ -14,6 +14,31 @@
     <link rel="stylesheet" href="css/icons.css">
     <link rel="stylesheet" href="css/eden/style.css">
 
+    <script src="http://www.dynamicpress.eu/envato/activia_main/wp-content/cache/busting/1/envato/activia_main/wp-includes/js/jquery/jquery-1.12.4-wp.js"></script>
+    <script src="https://nicescroll.areaaperta.com/wp-content/plugins/jnicescroll/js/jquery.nicescroll.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"></script>
+
+    <script type="text/javascript">
+        
+        var captcha = null;
+
+        var verifyCallback = function(response) {
+            alert(response);
+        };
+
+        var onloadCallback = function() {	
+
+            captcha = grecaptcha.render('example3', {
+                'sitekey' : '6Lc8KL0ZAAAAADLn0P34EMBbHb-WIX55bUYoxYl4',
+                'callback' : verifyCallback,
+                'theme' : 'dark'
+            });
+            
+        };
+
+    </script>
+
 </head>
 <body>
 
@@ -46,6 +71,22 @@
             
             <p>En construction</p>
 
+                <input type="email" id="email" name="email" placeholder="Entrez le nom de compte" />
+
+                <input type="text" id="username" name="username" placeholder="Entrez le nom de compte" />
+
+                <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" />
+
+                <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirmer le mot de passe" />
+
+                <div id="example3"></div>
+
+                <button id="captcha-button" onclick="getCaptcha()">Captcha</button>
+
+                <button id="register-button" onclick="register()">Register</button>
+
+            
+
         </div>
 
     {% endblock %}
@@ -59,14 +100,35 @@
 
 {% block javascripts %}
 
-    <script src="http://www.dynamicpress.eu/envato/activia_main/wp-content/cache/busting/1/envato/activia_main/wp-includes/js/jquery/jquery-1.12.4-wp.js"></script>
-    <script src="https://nicescroll.areaaperta.com/wp-content/plugins/jnicescroll/js/jquery.nicescroll.min.js"></script>
-
     <script>
 
-        (function($) {
-            $(".main").niceScroll();
-        })(jQuery);
+        jQuery(".main").niceScroll();
+
+        function getCaptcha() {
+            console.log(grecaptcha.getResponse(captcha));
+        };
+
+        function register() {
+            
+            var xhr = jQuery.ajax({
+                type: "POST",
+                url: "/api/users/register",
+                data: {
+
+                },
+                dataType: "json"
+            });
+
+            xhr.done(function(data) {
+                console.Log("Done : ");
+                consle.log(data);
+            }).fail(function(data) {
+                console.Log("Fail : ");
+                consle.log(data);
+            });
+
+            console.log("register");
+        };
 
     </script>
 

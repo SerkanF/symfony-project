@@ -8,6 +8,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Services\Logger\AbfLoggerService;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,9 +18,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+
+    private $logger;
+
+    public function __construct(ManagerRegistry $registry, AbfLoggerService $logger)
     {
         parent::__construct($registry, User::class);
+        $this->logger = $logger;
     }
 
     /**
@@ -34,6 +39,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
+    }
+
+    public function getUserByEmail($email) {
+        $this->logger->info($this, "email " . $email);
     }
 
     // /**
