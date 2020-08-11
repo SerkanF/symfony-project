@@ -238,3 +238,65 @@ p {
     bottom: 8px;
     width: 4px;
 }
+
+.error {
+    color: red;
+}
+
+.register-form {
+    position: relative;
+    width: 600px;
+    margin: 0 auto;
+    top: 150px;
+    background-color: white;
+    height: auto;
+    overflow: hidden;
+    opacity: 1;
+    font-family: "Barlow Condensed";
+    margin-bottom: 50px;
+}
+
+.header-form {
+    position: relative;
+    padding: 25px;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #1f1e1e;
+}
+
+.form {
+    position: relative;
+    padding: 20px;
+}
+
+.form-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+input.form-control {
+    position: relative;
+    padding: 10px;
+    color: #231f1f;
+    width: calc(100% - 40px);
+    margin: 0 auto;
+    border: 1px solid silver;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px rgb(0 0 0 / 0.2);
+}
+
+input.form-control:focus {
+    border: 1px solid silver;
+    outline: none;
+}
+
+button {
+    position: relative;
+    padding: 10px 50px;
+    font-size: 1em;
+    border: 1px solid #13b745;
+    background: #13b745;
+    color: white;
+}

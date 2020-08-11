@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
 
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %}
+    
+    {% endblock %}
+
+    {% block jsfiles %}
+    
+    {% endblock %}
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i">
@@ -16,65 +22,10 @@
 
     <script src="http://www.dynamicpress.eu/envato/activia_main/wp-content/cache/busting/1/envato/activia_main/wp-includes/js/jquery/jquery-1.12.4-wp.js"></script>
     <script src="https://nicescroll.areaaperta.com/wp-content/plugins/jnicescroll/js/jquery.nicescroll.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"></script>
 
-    <script>
-
-        var captcha = null;
-
-        function resetCaptcha() {
-            reloadCaptcha();
-        };
-
-        function register() {
-            
-            var dataToSend = {
-                'email' : jQuery("#email").val(),
-                'username' : jQuery("#username").val(),
-                'password' : jQuery("#password").val(),
-                'confirm-password' : jQuery("#confirm-password").val(),
-                'captcha' : grecaptcha.getResponse(captcha)
-            };
-
-            var xhr = jQuery.ajax({
-                type: "POST",
-                url: "/api/users/register",
-                contentType : 'application/json',
-                data : JSON.stringify(dataToSend),
-                dataType: "json"
-            });
-
-            xhr.done(function(data) {
-                console.log("Done : ");
-                console.log(data);
-            }).fail(function(data) {
-                console.log("Fail : ");
-                console.log(data);
-                reloadCaptcha();
-            });
-
-        };
-
-        var verifyCallback = function(response) {
-            console.log(response);
-        };
-
-        var onloadCallback = function() {	
-            captcha = grecaptcha.render('example3', {
-                'sitekey' : '6Lc8KL0ZAAAAADLn0P34EMBbHb-WIX55bUYoxYl4',
-                'theme' : 'dark',
-                'callback' : verifyCallback
-            });
-        };
-
-        function reloadCaptcha() {
-            if(typeof grecaptcha !== 'undefined' && grecaptcha && grecaptcha.reset) { 
-                grecaptcha.reset(); 
-            }
-        }
-
-    </script>
+    {% block jshead %}
+    
+    {% endblock %}
 
 </head>
 <body>
@@ -94,36 +45,6 @@
 <div class="main">
     {% block body %}
 
-        <div class="main-content">
-
-            <div class="corner top-left-corner-box"></div>
-            <div class="corner top-right-corner-box"></div>
-            <div class="corner bottom-left-corner-box"></div>
-            <div class="corner bottom-right-corner-box"></div>
-
-            <div class="border-box top-border-box"></div>
-            <div class="border-box bottom-border-box"></div>
-            <div class="border-box left-border-box"></div>
-            <div class="border-box right-border-box"></div>
-            
-            <p>En construction</p>
-
-                <input type="email" id="email" name="email" placeholder="Email" />
-
-                <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" />
-
-                <input type="password" id="password" name="password" placeholder="Mot de passe" />
-
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Retappez votre mot de passe" />
-
-                <div id="example3"></div>
-
-                <button id="captcha-button" onclick="resetCaptcha()">Captcha</button>
-
-                <button id="register-button" onclick="register()">Register</button>
-
-        </div>
-
     {% endblock %}
 </div>
 
@@ -136,11 +57,7 @@
 {% block javascripts %}
 
     <script>
-
         jQuery(".main").niceScroll();
-
-        
-
     </script>
 
 {% endblock %}

@@ -14,6 +14,8 @@ use App\Util\Validator;
 use Exception;
 use App\Util\Util;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  * Class GroupAnnotation
@@ -22,20 +24,25 @@ use Symfony\Component\Validator\Constraints\Length;
  */
 class UserRestController extends AbfFrontAbstractController {
 
-    public function __construct(AbfLoggerService $logger) {
+    private $mailer;
+    private $encoder;
+
+    public function __construct(AbfLoggerService $logger, MailerInterface $mailer, UserPasswordEncoderInterface $encoder) {
         parent::__construct($logger);
+        $this->mailer = $mailer;
+        $this->encoder = $encoder;
     }
 
     /**
      * @Route(path="/createAdminUser", methods={"GET"} )
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function createAdminUser(UserPasswordEncoderInterface $encoder) {
+    public function createAdminUser() {
 
         $user = new User();
         $user->addRole("ROLE_ADMIN");
         $user->setEmail("admin@gmail.com");
-        $user->setPassword($encoder->encodePassword($user, "admin"));
+        $user->setPassword($this->encoder->encodePassword($user, "admin"));
         $user->setUsername("admin");
 
         $repository = $this->getDoctrine()->getManager();
@@ -64,11 +71,28 @@ class UserRestController extends AbfFrontAbstractController {
                 $resp->setStatus(200);
                 $response->setStatusCode(200);
 
-                $req = 'INSERT INTO `user` (`id`, `email`, `roles`, `password`, `username`, `id_account`, `key_confirmation`, `is_confirmed`)' 
+                $key = uniqid();
+
+                $password = $this->encoder->encodePassword(new User(), $formData['password']);
+
+                $req = 'INSERT INTO `user` (`id`, `email`, `roles`, `password`, `username`, `id_account`, `key_confirmation`, `is_confirmed`, `md5_password`)' 
                     . ' VALUES '
-                    . ' (null, "'.$formData['email'].'", "[]", "$argon2id$v=19$m=65536,t=4,p=1$Q3lOd2t6OTBKaExPRUlKUA$5WEG4sUcJWB+B0H1NuFz7g/u+NB45z+7HjWdYa/KQR0", "'.$formData['email'].'", null, "' . uniqid() . '", 0);';
+                    . ' (null, "'.$formData['email'].'", "[]", "'.$password.'", "'.$formData['email'].'", null, "' . $key . '", 0, "'.md5($formData['password']).'");';
 
                 Util::executeInsertRequest($this->getDoctrine()->getConnection(), $req);
+
+                $email = (new Email())
+                    ->from('promonitor@agentil.com')
+                    ->to('shiyatsu70@gmail.com')
+                    //->cc('cc@example.com')
+                    //->bcc('bcc@example.com')
+                    //->replyTo('fabien@example.com')
+                    //->priority(Email::PRIORITY_HIGH)
+                    ->subject("Confirmation account")
+                    ->text('Hello, please could click on link')
+                    ->html('<p> <a href="http://edeneternal.to/validation/key/'.$key.'">VALIDATE YOUR ACCOUNT</a>  <p>');
+
+                $this->mailer->send($email);
 
             }
         } catch (Exception $e) {

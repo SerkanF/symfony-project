@@ -1,0 +1,136 @@
+{% extends "front-end/eden/base.html.twig" %}
+
+{% block jsfiles %}
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+{% endblock %}
+
+{% block jshead %}
+    <script>
+
+        var captcha = null;
+
+        var verifyCallback = function(response) {
+            console.log(response);
+        };
+
+        function loadCaptcha() {	
+            captcha = grecaptcha.render('recaptcha', {
+                'sitekey' : '6Lc8KL0ZAAAAADLn0P34EMBbHb-WIX55bUYoxYl4',
+                'theme' : 'dark',
+                'callback' : verifyCallback
+            });
+        };
+
+        function reloadCaptcha() {
+            if(typeof grecaptcha !== 'undefined' && grecaptcha && grecaptcha.reset) { 
+                grecaptcha.reset(); 
+            }
+        }
+
+        function register() {
+            
+            jQuery("#error-registration").html("");
+
+            var dataToSend = {
+                'email' : jQuery("#email").val(),
+                'username' : jQuery("#username").val(),
+                'password' : jQuery("#password").val(),
+                'confirm-password' : jQuery("#confirm-password").val(),
+                'captcha' : grecaptcha.getResponse(captcha)
+            };
+
+            var xhr = jQuery.ajax({
+                type: "POST",
+                url: "/api/users/register",
+                contentType : 'application/json',
+                data : JSON.stringify(dataToSend),
+                dataType: "json"
+            });
+
+            xhr.done(function(data) {
+                if (data.message != null) {
+                    console.log("Success message : " + data.message);
+                }
+                reloadCaptcha();
+            }).fail(function(data) {
+                if (data.responseJSON != null) {
+                    jQuery("#error-registration").html(data.responseJSON.message);
+                    console.log("Error message : " + data.responseJSON.message);
+                }
+                reloadCaptcha();
+            });
+
+        };
+
+    </script>
+
+{% endblock %}
+
+{% block body %} 
+
+    <div class="register-form">
+
+        <div class="corner top-left-corner-box"></div>
+        <div class="corner top-right-corner-box"></div>
+        <div class="corner bottom-left-corner-box"></div>
+        <div class="corner bottom-right-corner-box"></div>
+
+        <div class="border-box top-border-box"></div>
+        <div class="border-box bottom-border-box"></div>
+        <div class="border-box left-border-box"></div>
+        <div class="border-box right-border-box"></div>
+
+        <div class="header-form">
+            Créer son compte
+        </div>
+        
+        <div class="form">
+            <div class="">
+                <span id="error-registration" class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="Entrez votre email" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" class="form-control" />
+            </div>
+            
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Mot de passe" class="form-control"/>  
+            </div>
+
+            <div class="form-group">
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Retappez votre mot de passe" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <div id="recaptcha"></div>
+            </div>
+
+            <div class="form-group">
+                <button id="register-button" onclick="register()">Register</button>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+        jQuery("#recaptcha").ready(function() {
+            setTimeout(function() {
+                loadCaptcha();
+            }, 500);
+            
+        });
+
+    </script>
+
+{% endblock %}
