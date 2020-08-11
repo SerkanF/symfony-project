@@ -4,8 +4,6 @@ namespace App\Util;
 
 use Exception;
 
-use App\Services\Logger\AbfLoggerService;
-
 class Validator {
 
     public static $keySecretCaptcha = "6Lc8KL0ZAAAAAKCohu1DKgAYingzrlmylsZyKt9S";
@@ -13,7 +11,7 @@ class Validator {
     public static function formRegisterIsValid($array) {
 
         if (count($array) < 5) {
-            throw new Exception("Parameters missing");
+            throw new Exception("Veuillez remplir tous les champs.");
         }
 
         if (!isset($array['email']) || trim($array['email']) == "" 
@@ -22,7 +20,7 @@ class Validator {
             || !isset($array['confirm-password']) || trim($array['confirm-password']) == ""
             || !isset($array['captcha']) || trim($array['captcha']) == "") {
 
-            throw new Exception("Form input null");
+            throw new Exception("Veuillez remplir tous les champs.");
         }
 
         $email = $array['email'];
@@ -31,20 +29,24 @@ class Validator {
         $confirmPassword = $array['confirm-password'];
         $captcha = $array['captcha'];
 
-        $regex = '/^[\w]+$/';
+        $regex = '/^[a-zA-Z0-9]+$/';
 
         $isValid = true;
 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new Exception("L'adresse email est invalide");
+        }
+
         if (!preg_match($regex, $username)) {
-            throw new Exception("Character not autorized");
+            throw new Exception("Les caractères spéciaux ne sont pas autorisé.");
         }
 
         if ($password != $confirmPassword) {
-            throw new Exception("Password not match");
+            throw new Exception("Les mots de passe ne sont pas identique.");
         }
 
         if (!Validator::isValidCaptcha($captcha)) {
-            throw new Exception("Captcha invalid");
+            throw new Exception("Le captcha est invalide.");
         }
 
         return $isValid;
@@ -67,11 +69,9 @@ class Validator {
 
         $sql = "SELECT * " 
             . " FROM user u "
-            . " WHERE u.email = '".$email."' OR u.username = '".$username."'";
+            . " WHERE u.email = '".$email."' OR u.username = '".$username."'"; // u.email = '".$email."' OR
 
         $connexion = $doctrine->getConnection();
-
-        $isFree = false;
 
         $fetchData = [];
 
@@ -82,7 +82,7 @@ class Validator {
         }
 
         if (count($fetchData) >= 1) {
-            throw new Exception("Compte utilisateur déjà pris");
+            throw new Exception("L'adresse mail est déjà prise.");
         } else {
             return true;
         }
@@ -107,7 +107,7 @@ class Validator {
         }
 
         if (count($fetchData) >= 1) {
-            throw new Exception("Compte utilisateur déjà pris");
+            throw new Exception("Ce nom d'utilisateur déjà pris.");
         } else {
             return true;
         }
@@ -131,7 +131,7 @@ class Validator {
         }
 
         if (count($fetchData) >= 1) {
-            throw new Exception("Compte utilisateur déjà pris");
+            throw new Exception("Ce nom d'utilisateur déjà pris.");
         } else {
             return true;
         }

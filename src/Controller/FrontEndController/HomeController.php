@@ -57,19 +57,16 @@ class HomeController extends AbfFrontAbstractController {
 
         if (count($data) > 0) {
 
-            if ($data[0] != null && $data[0]['is_confirmed'] != null)
+            if ($data[0] != null && $data[0]['is_confirmed'] != null) {
 
-            if ($data[0]['is_confirmed'] == 0) {
-                // Finalise la création du compte
+                if ($data[0]['is_confirmed'] == 0) {
+                    // Finalise la création du compte
 
-                $req = "SELECT MAX(acc.id) AS MAX from public.accounts acc;";
+                    $req = "SELECT MAX(acc.id) AS MAX from public.accounts acc;";
 
-                $dataId = Util::executeSqlRequest($this->getDoctrine()->getConnection("fnaccount"), $req);
+                    $dataId = Util::executeSqlRequest($this->getDoctrine()->getConnection("fnaccount"), $req);
 
-                $id = null;
-
-                if ($dataId[0] != null && $dataId[0]['max'] != null) {
-                    $id = intval($dataId[0]['max']) + 1;
+                    $id = ($dataId[0]['max'] != null) ? intval($dataId[0]['max']) + 1 : 1;
 
                     $req = "INSERT INTO public.accounts( "
                         . " id, username, password, realname, worldserver, state, health_offline_time, last_save_health_time "
@@ -85,18 +82,21 @@ class HomeController extends AbfFrontAbstractController {
 
                     Util::executeInsertRequest($this->getDoctrine()->getConnection("fnmember"), $req2);
 
-                }
+                    $req3 = " UPDATE USER u "
+                            . " SET u.is_confirmed = 1, "
+                            . " u.id_account = ".$id." "
+                            . " WHERE u.key_confirmation = '".$key."';";
 
-                $this->data['error'] = false;
-                $this->data['message'] = $req;
-                $this->data['message2'] = $req2;
-            } else {
-                $this->data['error'] = true;
-                $this->data['message'] = "Account already confirmed";
+                    Util::executeInsertRequest($this->getDoctrine()->getConnection(), $req3);
+
+                    $this->data['isSuccess'] = true;
+
+                } else {
+                    $this->data['isAlreadyConfirmed'] = true;
+                }
             }
         } else {
-            $this->data['error'] = true;
-            $this->data['message'] = "Key not found";
+            $this->data['keyNotValid'] = true;
         }
 
         return $this->renderCustomView('front-end/eden/pages/validation.html.twig');

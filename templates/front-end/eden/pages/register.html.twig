@@ -32,6 +32,7 @@
         function register() {
             
             jQuery("#error-registration").html("");
+            jQuery("#success-registration").html("");
 
             var dataToSend = {
                 'email' : jQuery("#email").val(),
@@ -40,6 +41,8 @@
                 'confirm-password' : jQuery("#confirm-password").val(),
                 'captcha' : grecaptcha.getResponse(captcha)
             };
+
+            jQuery(".loader").addClass("show");
 
             var xhr = jQuery.ajax({
                 type: "POST",
@@ -50,14 +53,15 @@
             });
 
             xhr.done(function(data) {
+                jQuery(".loader").removeClass("show");
                 if (data.message != null) {
-                    console.log("Success message : " + data.message);
+                    jQuery("#success-registration").html(data.message);
                 }
                 reloadCaptcha();
             }).fail(function(data) {
+                jQuery(".loader").removeClass("show");
                 if (data.responseJSON != null) {
                     jQuery("#error-registration").html(data.responseJSON.message);
-                    console.log("Error message : " + data.responseJSON.message);
                 }
                 reloadCaptcha();
             });
@@ -69,6 +73,10 @@
 {% endblock %}
 
 {% block body %} 
+
+    <div class="loader">
+        <div class="lds-ripple"><div></div><div></div></div>
+    </div>
 
     <div class="register-form">
 
@@ -87,9 +95,10 @@
         </div>
         
         <div class="form">
-            <div class="">
-                <span id="error-registration" class="error"></span>
-            </div>
+            
+            <div id="error-registration" class="error"></div>
+
+            <div id="success-registration" class="success"></div>
 
             <div class="form-group">
                 <input type="email" id="email" name="email" placeholder="Entrez votre email" class="form-control" />

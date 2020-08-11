@@ -66,10 +66,6 @@ class UserRestController extends AbfFrontAbstractController {
 
         try {
             if (Validator::formRegisterIsValid($formData) && Validator::isAccountIsFree($this->getDoctrine(), $formData)) {
-                $resp->setErrorCode(null);
-                $resp->setMessage("Le compte a été créé avec succès");
-                $resp->setStatus(200);
-                $response->setStatusCode(200);
 
                 $key = uniqid();
 
@@ -83,16 +79,20 @@ class UserRestController extends AbfFrontAbstractController {
 
                 $email = (new Email())
                     ->from('promonitor@agentil.com')
-                    ->to('shiyatsu70@gmail.com')
-                    //->cc('cc@example.com')
-                    //->bcc('bcc@example.com')
-                    //->replyTo('fabien@example.com')
-                    //->priority(Email::PRIORITY_HIGH)
+                    ->to("shiyatsu70@gmail.com") // $formData['email']
                     ->subject("Confirmation account")
-                    ->text('Hello, please could click on link')
-                    ->html('<p> <a href="http://edeneternal.to/validation/key/'.$key.'">VALIDATE YOUR ACCOUNT</a>  <p>');
+                    ->html('<p> 
+                            <h1>Bienvenu '.$formData['username'].' !</h1>
+                            <p>Pour finir la création de votre compte, veuillez cliquer sur ce lien :</p>
+                            <a href="http://edeneternal.to/validation/key/'.$key.'">Valider mon compte</a> 
+                        <p>');
 
                 $this->mailer->send($email);
+
+                $resp->setErrorCode(null);
+                $resp->setMessage("Le compte a été créé avec succès. Un email vous a été envoyé pour finaliser la création de votre compte");
+                $resp->setStatus(200);
+                $response->setStatusCode(200);
 
             }
         } catch (Exception $e) {

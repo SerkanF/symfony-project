@@ -1,5 +1,43 @@
-<h1> VALIDATION PAGE </h1>
+{% extends "front-end/eden/base.html.twig" %}
 
-<p>req : {{ message }} </p>
+{% block body %} 
 
-<p>req2 : {{ message2 }} </p>
+    <div class="register-form">
+        
+        <div class="corner top-left-corner-box"></div>
+        <div class="corner top-right-corner-box"></div>
+        <div class="corner bottom-left-corner-box"></div>
+        <div class="corner bottom-right-corner-box"></div>
+
+        <div class="border-box top-border-box"></div>
+        <div class="border-box bottom-border-box"></div>
+        <div class="border-box left-border-box"></div>
+        <div class="border-box right-border-box"></div>
+
+        <div class="header-form">
+            Confirmation de création de compte
+        </div>
+
+        <div class="bloc-text success">
+
+            {% if isAlreadyConfirmed is defined and isAlreadyConfirmed != null and isAlreadyConfirmed == true %}
+                <p class="success">Votre compte a déjà été confirmer.</p>
+                <p class="success">Vous pouvez vous connecter sur le jeu.</p>
+            {% endif %}     
+
+            {% if keyNotValid is defined  and keyNotValid != null and keyNotValid == true %}
+                <p class="error">Votre clé de confirmatin n'est plus valide.</p>
+                <p class="error">Veuillez contacter l'administrateur ou créer un autre compte.</p>
+            {% endif %}      
+
+            {% if isSuccess is defined and isSuccess != null and isSuccess == true %}
+                <p class="success">Votre compte est maintenant confirmé.</p>
+                <p class="success">Vous pouvez vous connecter sur le jeu.</p>
+            {% endif %} 
+            
+        </div>
+
+    </div>
+
+{% endblock %}
+

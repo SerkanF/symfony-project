@@ -1,4 +1,62 @@
 /**
+    LOADER
+*/
+
+.loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    background-color: rgb(51 51 51 / 0.7);
+    display: none;
+}
+
+.loader.show {
+    display: block;
+}
+
+.lds-ripple {
+    display: inline-block;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    left: 50%;
+    top: 50%;
+    margin-top: -120px;
+    margin-left: -50px;
+  }
+  .lds-ripple div {
+    position: absolute;
+    border: 6px solid #fff;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  .lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  @keyframes lds-ripple {
+    0% {
+      top: 72px;
+      left: 72px;
+      width: 0;
+      height: 0;
+      opacity: 1;
+    }
+    100% {
+      top: 0px;
+      left: 0px;
+      width: 148px;
+      height: 148px;
+      opacity: 0;
+    }
+  }
+
+/**
     NAV
  */
 
@@ -76,7 +134,7 @@
 }
 
 /**
-    FOOTE
+    FOOTER
 */
 
 .footer {
@@ -154,8 +212,15 @@
     margin-bottom: 50px;
 }
 
+.bloc-text {
+    position: relative;
+    font-size: 1em;
+    padding: 20px;
+}
+
 p {
-    margin: 10%;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .top-box, .bottom-box {
@@ -243,6 +308,10 @@ p {
     color: red;
 }
 
+.success {
+    color: green;
+}
+
 .register-form {
     position: relative;
     width: 600px;
@@ -258,7 +327,7 @@ p {
 
 .header-form {
     position: relative;
-    padding: 25px;
+    padding: 25px 25px 0px 20px;
     font-size: 1.5em;
     text-transform: uppercase;
     font-weight: 600;
@@ -299,4 +368,22 @@ button {
     border: 1px solid #13b745;
     background: #13b745;
     color: white;
+    outline: none;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: white;
+    border: 1px solid #13b745;
+    color: #13b745;
+}
+
+button:focus {
+    outline: none;
+}
+
+#success-registration, #error-registration {
+    padding: 0px 0 15px 0px;
+    font-size: 1.1em;
 }
