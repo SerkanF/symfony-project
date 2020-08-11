@@ -19,23 +19,60 @@
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"></script>
 
-    <script type="text/javascript">
-        
+    <script>
+
         var captcha = null;
 
+        function resetCaptcha() {
+            reloadCaptcha();
+        };
+
+        function register() {
+            
+            var dataToSend = {
+                'email' : jQuery("#email").val(),
+                'username' : jQuery("#username").val(),
+                'password' : jQuery("#password").val(),
+                'confirm-password' : jQuery("#confirm-password").val(),
+                'captcha' : grecaptcha.getResponse(captcha)
+            };
+
+            var xhr = jQuery.ajax({
+                type: "POST",
+                url: "/api/users/register",
+                contentType : 'application/json',
+                data : JSON.stringify(dataToSend),
+                dataType: "json"
+            });
+
+            xhr.done(function(data) {
+                console.log("Done : ");
+                console.log(data);
+            }).fail(function(data) {
+                console.log("Fail : ");
+                console.log(data);
+                reloadCaptcha();
+            });
+
+        };
+
         var verifyCallback = function(response) {
-            alert(response);
+            console.log(response);
         };
 
         var onloadCallback = function() {	
-
             captcha = grecaptcha.render('example3', {
                 'sitekey' : '6Lc8KL0ZAAAAADLn0P34EMBbHb-WIX55bUYoxYl4',
-                'callback' : verifyCallback,
-                'theme' : 'dark'
+                'theme' : 'dark',
+                'callback' : verifyCallback
             });
-            
         };
+
+        function reloadCaptcha() {
+            if(typeof grecaptcha !== 'undefined' && grecaptcha && grecaptcha.reset) { 
+                grecaptcha.reset(); 
+            }
+        }
 
     </script>
 
@@ -71,21 +108,19 @@
             
             <p>En construction</p>
 
-                <input type="email" id="email" name="email" placeholder="Entrez le nom de compte" />
+                <input type="email" id="email" name="email" placeholder="Email" />
 
-                <input type="text" id="username" name="username" placeholder="Entrez le nom de compte" />
+                <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" />
 
-                <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" />
+                <input type="password" id="password" name="password" placeholder="Mot de passe" />
 
-                <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirmer le mot de passe" />
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Retappez votre mot de passe" />
 
                 <div id="example3"></div>
 
-                <button id="captcha-button" onclick="getCaptcha()">Captcha</button>
+                <button id="captcha-button" onclick="resetCaptcha()">Captcha</button>
 
                 <button id="register-button" onclick="register()">Register</button>
-
-            
 
         </div>
 
@@ -104,31 +139,7 @@
 
         jQuery(".main").niceScroll();
 
-        function getCaptcha() {
-            console.log(grecaptcha.getResponse(captcha));
-        };
-
-        function register() {
-            
-            var xhr = jQuery.ajax({
-                type: "POST",
-                url: "/api/users/register",
-                data: {
-
-                },
-                dataType: "json"
-            });
-
-            xhr.done(function(data) {
-                console.Log("Done : ");
-                consle.log(data);
-            }).fail(function(data) {
-                console.Log("Fail : ");
-                consle.log(data);
-            });
-
-            console.log("register");
-        };
+        
 
     </script>
 

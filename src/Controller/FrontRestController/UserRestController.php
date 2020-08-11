@@ -10,6 +10,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Services\Logger\AbfLoggerService;
 use App\Controller\FrontRestController\Response;
+use App\Util\Validator;
+use Exception;
+use App\Util\Util;
 use Symfony\Component\Validator\Constraints\Length;
 
 /**
@@ -47,123 +50,33 @@ class UserRestController extends AbfFrontAbstractController {
      */
     public function postUser(Request $request) : JsonResponse {
 
-        $data = [];
+        $formData = json_decode($request->getContent(), true);
 
         $resp = new Response();
         $response = new JsonResponse();
         $response->headers->set('Content-Type', 'application/json');
         $response->headers->set('Access-Control-Allow-Origin', '*');
 
-        $sql = "SELECT * "
-            . "FROM public.accounts acc "
-            . "WHERE acc.username = 'errgfwerfew';";
+        try {
+            if (Validator::formRegisterIsValid($formData) && Validator::isAccountIsFree($this->getDoctrine(), $formData)) {
+                $resp->setErrorCode(null);
+                $resp->setMessage("Le compte a été créé avec succès");
+                $resp->setStatus(200);
+                $response->setStatusCode(200);
 
-        // DATABASE fnaccount
+                $req = 'INSERT INTO `user` (`id`, `email`, `roles`, `password`, `username`, `id_account`, `key_confirmation`, `is_confirmed`)' 
+                    . ' VALUES '
+                    . ' (null, "'.$formData['email'].'", "[]", "$argon2id$v=19$m=65536,t=4,p=1$Q3lOd2t6OTBKaExPRUlKUA$5WEG4sUcJWB+B0H1NuFz7g/u+NB45z+7HjWdYa/KQR0", "'.$formData['email'].'", null, "' . uniqid() . '", 0);';
 
-        $connexion = $this->getDoctrine()->getConnection("fnaccount");
+                Util::executeInsertRequest($this->getDoctrine()->getConnection(), $req);
 
-        $stmt = $connexion->prepare($sql);
-        $stmt->execute();
-        $data = $stmt->fetchAll();
-        $connexion->close();
-
-        $strLog = "DATABASE fnaccount row data : " . count($data) . "";
-
-        $this->logger->info($this, $strLog);
-
-        if (count($data) >= 1) {
-            $strLog = "Account already exist";
-
+            }
+        } catch (Exception $e) {
             $resp->setErrorCode(501);
-            $resp->setMessage("Le nom d'utilisateur est déjà pris !");
+            $resp->setMessage($e->getMessage());
             $resp->setStatus(500);
-
-            $response->setData($resp);
-
-            return $response;
-
-            $this->logger->info($this, $strLog);
-
+            $response->setStatusCode(500);
         }
-
-        // DATABASE fnmember
-
-        $sql = "SELECT * "
-            . "FROM public.tb_user u "
-            . "WHERE u.mid = 'errgfwerfew' ;";
-
-        $connexion = $this->getDoctrine()->getConnection("fnmember");
-
-        $stmt = $connexion->prepare($sql);
-        $stmt->execute();
-        $data = $stmt->fetchAll();
-        $connexion->close();
-
-        $strLog = "DATABASE fnmember row data : " . count($data) . "";
-
-        if (count($data) >= 1) {
-            $strLog = "Account already exist in fnmember";
-
-            $resp->setErrorCode(502);
-            $resp->setMessage("Le nom d'utilisateur est déjà pris !");
-            $resp->setStatus(500);
-
-            $response->setData($resp);
-
-            $this->logger->info($this, $strLog);
-
-            return $response;
-
-        }
-        
-        // DATABASE default
-
-        $email = "admin@gmaileef.com";
-        $username = "adminefe";
-
-        $sql = "SELECT * " 
-            . " FROM user u "
-            . " WHERE u.email = '".$email."' OR u.username = '".$username."'";
-
-        $connexion = $this->getDoctrine()->getConnection();
-
-        $stmt = $connexion->prepare($sql);
-        $stmt->execute();
-        $data = $stmt->fetchAll();
-        $connexion->close();
-
-        if (count($data) >= 1) {
-            $strLog = "Email " . $email . ", Username : " . $username . " already exist in MySQL DATABASE";
-
-            $resp->setErrorCode(503);
-            $resp->setMessage("Le nom d'utilisateur est déjà pris !");
-            $resp->setStatus(500);
-
-            $response->setData($resp);
-
-            $this->logger->info($this, $strLog);
-
-            return $response;
-        }
-
-        // Check capcha
-
-        $data = json_decode($request->getContent(), true);
-
-        var_dump($data['email']);
-        var_dump($data['username']);
-        var_dump($data['password']);
-        var_dump($data['confirm-password']);
-        var_dump($data['captcha']);
-
-        $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$this->keySecretCaptcha.'&response=');
-
-        $responseData = json_decode($verifyResponse);
-
-        $response = new JsonResponse();
-        $resp->setErrorCode(503);
-        $resp->setMessage("Votre compte a été créé. Un mail de confirmation vous a été envoyé !");
-        $resp->setStatus(500);
 
         $response->setData($resp);
 
