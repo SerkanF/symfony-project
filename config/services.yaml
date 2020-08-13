@@ -27,10 +27,6 @@ services:
         resource: '../src/RoutingAnnotations'
         tags: ['controller.service_arguments']
 
-    App\RestController\:
-        resource: '../src/RestController'
-        tags: ['controller.service_arguments']
-
     # Define service of Controller/Twig/FirstPageController.php
     # Provide the argument $twig in constructor
     # Use the same name

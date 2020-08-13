@@ -6,11 +6,6 @@
             <a href="/home">Accueil</a>
         </li>
 
-        <li class="nav-items">
-            <a href="/download">Téléchargement</a>
-        </li>
-
-
         {% if user is defined and  user['username'] is defined and  user['username'] != null %}
 
             <li class="nav-items right">
@@ -18,7 +13,7 @@
             </li>
 
             <li class="nav-items right">
-                <a href="/account">Mon compte ({{ user['username'] }})</a>
+                <a href="#">Mon compte ({{ user['username'] }})</a>
             </li>
         {% else %}
             <li class="nav-items right">

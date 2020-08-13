@@ -387,3 +387,119 @@ button:focus {
     padding: 0px 0 15px 0px;
     font-size: 1.1em;
 }
+
+.main-content {
+    position: relative;
+    width: 1080px;
+    margin: 0 auto;
+    top: 150px;
+    background-color: rgb(243 243 243 / 0.8);
+    height: auto;
+    overflow: hidden;
+    opacity: 1;
+    font-family: "Barlow Condensed";
+    margin-bottom: 50px;
+}
+
+.right-main-content {
+    position: relative;
+    float: right;
+    width: 270px;
+    margin: 15px;
+}
+
+.left-main-content {
+    position: relative;
+    float: left;
+    width: 780px;
+}
+
+.links-menu {
+    background-color: white;
+    
+}
+
+.links-menu .item-link {
+    background-color: white;
+}
+
+.links-menu .item-link a {
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s;
+}
+
+.item-link .item-link a:visited, 
+.item-link .item-link a:active,
+.item-link .item-link a:focus {
+    text-decoration: none;
+    color: #333;
+    outline: none;
+}
+
+.links-menu .item-link a:hover {
+    background-color: #333;
+    color: #8dd9f1;
+}
+
+.item-link div {
+    position: relative;
+    display: inline-block;
+}
+
+.item-link div.icon-link {
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 53px;
+    text-align: center;
+    top: 5px;
+}
+
+.item-link div.icon-link i {
+    font-size: 40px;
+}
+
+.item-link div.text-link {
+    position: relative;
+    display: inline-block;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 2em;
+    text-transform: uppercase;
+    font-family: "Barlow Condensed";
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 1.3em;
+    text-transform: uppercase;
+    font-family: "Barlow Condensed";
+    font-weight: 600;
+    color: #1b78d8;
+}
+
+.announce, .news, .patches {
+    background-color: white;
+    margin: 15px;
+    padding: 15px;
+}
+
+p {
+    position: relative;
+    color: #333;
+    font-size: 1em;
+    line-height: 1.5em;
+}

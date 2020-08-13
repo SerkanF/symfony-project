@@ -20,6 +20,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Util\Validator;
+use Exception;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
@@ -51,12 +53,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function getCredentials(Request $request)
     {
 
-        $this->logger->info("getCredentials");
+        $this->logger->info("getCredentials" . $request->request->get('recaptcha'));
+
+        var_dump($request->request);
 
         $credentials = [
             'username' => $request->request->get('username'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
+            'recaptcha' => $request->request->get('g-recaptcha-response')
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
@@ -72,15 +77,20 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $this->logger->info("getUser");
 
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
+
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
+        }
+
+        if (!Validator::isValidCaptcha($credentials['recaptcha'])) {
+            throw new CustomUserMessageAuthenticationException("Invalid captcha");
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Le compte utilisateur ou le mot de passe est incorrect.');
         }
 
         return $user;

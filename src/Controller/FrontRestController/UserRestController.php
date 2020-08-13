@@ -34,24 +34,6 @@ class UserRestController extends AbfFrontAbstractController {
     }
 
     /**
-     * @Route(path="/createAdminUser", methods={"GET"} )
-     * @param UserPasswordEncoderInterface $encoder
-     */
-    public function createAdminUser() {
-
-        $user = new User();
-        $user->addRole("ROLE_ADMIN");
-        $user->setEmail("admin@gmail.com");
-        $user->setPassword($this->encoder->encodePassword($user, "admin"));
-        $user->setUsername("admin");
-
-        $repository = $this->getDoctrine()->getManager();
-        $repository->persist($user);
-        $repository->flush();
-
-    }
-
-    /**
      * @Route(path="/register", methods={"POST"} )
      * @return JsonResponse
      */
@@ -73,16 +55,16 @@ class UserRestController extends AbfFrontAbstractController {
 
                 $req = 'INSERT INTO `user` (`id`, `email`, `roles`, `password`, `username`, `id_account`, `key_confirmation`, `is_confirmed`, `md5_password`)' 
                     . ' VALUES '
-                    . ' (null, "'.$formData['email'].'", "[]", "'.$password.'", "'.$formData['email'].'", null, "' . $key . '", 0, "'.md5($formData['password']).'");';
+                    . ' (null, "'.$formData['email'].'", "[]", "'.$password.'", "'.$formData['username'].'", null, "' . $key . '", 0, "'.md5($formData['password']).'");';
 
                 Util::executeInsertRequest($this->getDoctrine()->getConnection(), $req);
 
                 $email = (new Email())
                     ->from('promonitor@agentil.com')
                     ->to("shiyatsu70@gmail.com") // $formData['email']
-                    ->subject("Confirmation account")
+                    ->subject("Confirmation")
                     ->html('<p> 
-                            <h1>Bienvenu '.$formData['username'].' !</h1>
+                            <p>Bienvenu '.$formData['username'].' !</p>
                             <p>Pour finir la création de votre compte, veuillez cliquer sur ce lien :</p>
                             <a href="http://edeneternal.to/validation/key/'.$key.'">Valider mon compte</a> 
                         <p>');
@@ -107,33 +89,5 @@ class UserRestController extends AbfFrontAbstractController {
         return $response;
 
     }
-
-    /**
-     * @Route(path="/getall", methods={"GET"} )
-     * @return JsonResponse
-     */
-    public function getUsers() : JsonResponse {
-
-        $connexion = $this->getDoctrine()->getConnection("fnaccount");
-
-        $sql = "SELECT * FROM accounts LIMIT 1000 OFFSET 0";
-
-        $stmt = $connexion->prepare($sql);
-        $stmt->execute();
-        $data = $stmt->fetchAll();
-        $connexion->close();
-
-        $response = new JsonResponse();
-
-        $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-
-        $response->setData($data);
-
-        return $response;
-
-    }
-
-    
 
 }

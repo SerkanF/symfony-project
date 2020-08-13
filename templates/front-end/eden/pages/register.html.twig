@@ -11,15 +11,10 @@
 
         var captcha = null;
 
-        var verifyCallback = function(response) {
-            console.log(response);
-        };
-
         function loadCaptcha() {	
             captcha = grecaptcha.render('recaptcha', {
                 'sitekey' : '6Lc8KL0ZAAAAADLn0P34EMBbHb-WIX55bUYoxYl4',
-                'theme' : 'dark',
-                'callback' : verifyCallback
+                'theme' : 'dark'
             });
         };
 

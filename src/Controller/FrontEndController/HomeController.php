@@ -16,15 +16,7 @@ class HomeController extends AbfFrontAbstractController {
      * @return Response
      */
     public function index() {
-        return $this->renderCustomView('front-end/base.html.twig');
-    }
-
-    /**
-     * @Route(path="/resume")
-     * @return Response
-     */
-    public function resume() {
-        return $this->renderCustomView('front-end/resume.html.twig');
+        return $this->renderCustomView('front-end/eden/pages/home.html.twig');
     }
 
     /**
@@ -32,7 +24,7 @@ class HomeController extends AbfFrontAbstractController {
      * @return 
      */
     public function homeEden() {
-        return $this->renderCustomView('front-end/eden/base.html.twig');
+        return $this->renderCustomView('front-end/eden/pages/home.html.twig');
     }
 
     /**
@@ -62,11 +54,7 @@ class HomeController extends AbfFrontAbstractController {
                 if ($data[0]['is_confirmed'] == 0) {
                     // Finalise la création du compte
 
-                    $req = "SELECT MAX(acc.id) AS MAX from public.accounts acc;";
-
-                    $dataId = Util::executeSqlRequest($this->getDoctrine()->getConnection("fnaccount"), $req);
-
-                    $id = ($dataId[0]['max'] != null) ? intval($dataId[0]['max']) + 1 : 1;
+                    $id = ($data[0]['id'] != null) ? intval($data[0]['id']) + 1 : 1;
 
                     $req = "INSERT INTO public.accounts( "
                         . " id, username, password, realname, worldserver, state, health_offline_time, last_save_health_time "
