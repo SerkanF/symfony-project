@@ -54,7 +54,7 @@ class HomeController extends AbfFrontAbstractController {
                 if ($data[0]['is_confirmed'] == 0) {
                     // Finalise la création du compte
 
-                    $id = ($data[0]['id'] != null) ? intval($data[0]['id']) + 1 : 1;
+                    $id = intval($data[0]['id']);
 
                     $req = "INSERT INTO public.accounts( "
                         . " id, username, password, realname, worldserver, state, health_offline_time, last_save_health_time "

@@ -60,8 +60,8 @@ class UserRestController extends AbfFrontAbstractController {
                 Util::executeInsertRequest($this->getDoctrine()->getConnection(), $req);
 
                 $email = (new Email())
-                    ->from('promonitor@agentil.com')
-                    ->to("shiyatsu70@gmail.com") // $formData['email']
+                    ->from('contact.edeneternal.to@gmail.com')
+                    ->to($formData['email']) // $formData['email']
                     ->subject("Confirmation")
                     ->html('<p> 
                             <p>Bienvenu '.$formData['username'].' !</p>
