@@ -497,9 +497,23 @@ h3 {
     padding: 15px;
 }
 
+.announce-content, .news-content {
+    font-weight: 500;
+    padding-bottom: 15px;
+}
+
 p {
     position: relative;
     color: #333;
     font-size: 1em;
     line-height: 1.5em;
+    font-weight: 500;
+}
+
+
+
+.announce-content ul, .news-content ul {
+    padding-left: 25px;
+    line-height: 20px;
+    color: #333;
 }
