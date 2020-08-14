@@ -53,9 +53,9 @@ class UserRestController extends AbfFrontAbstractController {
 
                 $password = $this->encoder->encodePassword(new User(), $formData['password']);
 
-                $req = 'INSERT INTO `user` (`id`, `email`, `roles`, `password`, `username`, `id_account`, `key_confirmation`, `is_confirmed`, `md5_password`)' 
+                $req = 'INSERT INTO `user` (`id`, `email`, `roles`, `password`, `username`, `key_confirmation`, `is_confirmed`, `md5_password`)' 
                     . ' VALUES '
-                    . ' (null, "'.$formData['email'].'", "[]", "'.$password.'", "'.$formData['username'].'", null, "' . $key . '", 0, "'.md5($formData['password']).'");';
+                    . ' (null, "'.$formData['email'].'", "", "'.$password.'", "'.$formData['username'].'", "' . $key . '", 0, "'.md5($formData['password']).'");';
 
                 Util::executeInsertRequest($this->getDoctrine()->getConnection(), $req);
 

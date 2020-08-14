@@ -78,7 +78,8 @@ class Validator {
         try {
             $fetchData = Util::executeSqlRequest($connexion, $sql);
         } catch (Exception $e) {
-            throw new Exception("Une erreur interne est intervenu, contacter l'administrateur");
+            var_dump($e->getMessage());
+            throw new Exception("Une erreur interne est intervenu, contacter l'administrateur isAccountIsFreeInDefault");
         }
 
         if (count($fetchData) >= 1) {
@@ -103,7 +104,7 @@ class Validator {
         try {
             $fetchData = Util::executeSqlRequest($connexion, $sql);
         } catch (Exception $e) {
-            throw new Exception("Une erreur interne est intervenu, contacter l'administrateur");
+            throw new Exception("Une erreur interne est intervenu, contacter l'administrateur isAccountIsFreeInFnAccount");
         }
 
         if (count($fetchData) >= 1) {
@@ -127,7 +128,7 @@ class Validator {
         try {
             $fetchData = Util::executeSqlRequest($connexion, $sql);
         } catch (Exception $e) {
-            throw new Exception("Une erreur interne est intervenu, contacter l'administrateur");
+            throw new Exception("Une erreur interne est intervenu, contacter l'administrateur isAccountIsFreeInFnMember");
         }
 
         if (count($fetchData) >= 1) {

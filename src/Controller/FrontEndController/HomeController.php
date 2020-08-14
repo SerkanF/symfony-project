@@ -42,7 +42,7 @@ class HomeController extends AbfFrontAbstractController {
     public function validation($key) {
 
         $req = "SELECT * "
-                . " FROM USER u "
+                . " FROM user u "
                 . " WHERE u.key_confirmation = '".$key."';";
 
         $data = Util::executeSqlRequest($this->getDoctrine()->getConnection(), $req);
@@ -70,9 +70,8 @@ class HomeController extends AbfFrontAbstractController {
 
                     Util::executeInsertRequest($this->getDoctrine()->getConnection("fnmember"), $req2);
 
-                    $req3 = " UPDATE USER u "
-                            . " SET u.is_confirmed = 1, "
-                            . " u.id_account = ".$id." "
+                    $req3 = " UPDATE user u "
+                            . " SET u.is_confirmed = 1 "
                             . " WHERE u.key_confirmation = '".$key."';";
 
                     Util::executeInsertRequest($this->getDoctrine()->getConnection(), $req3);

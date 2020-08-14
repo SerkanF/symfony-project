@@ -23,7 +23,7 @@ class User implements UserInterface, \JsonSerializable
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="string")
      */
     private $roles = [];
 
@@ -39,11 +39,6 @@ class User implements UserInterface, \JsonSerializable
     private $username;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $idAccount;
-
-    /**
      * @ORM\Column(type="string")
      */
     private $keyConfirmation;
@@ -52,6 +47,11 @@ class User implements UserInterface, \JsonSerializable
      * @ORM\Column(type="boolean")
      */
     private $isConfirmed;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $md5Password;
 
     public function getId(): ?int
     {
@@ -127,14 +127,14 @@ class User implements UserInterface, \JsonSerializable
         return $this;
     }
 
-    public function getIdAccount() { return $this->idAccount; }
-    public function setIdAccount($idAccount) { return $this->idAccount = $idAccount; }
-
     public function getKeyConfirmation() { return $this->keyConfirmation; }
     public function setKeyConfirmation($keyConfirmation) { return $this->keyConfirmation = $keyConfirmation; }
 
     public function getIsConfirmed() { return $this->isConfirmed; }
     public function setIsConfirmed($isConfirmed) { return $this->isConfirmed = $isConfirmed; }
+
+    public function getMd5Password() { return $this->md5Password; }
+    public function setMd5Password($md5Password) { $this->md5Password = $md5Password; }
 
     /**
      * Specify data which should be serialized to JSON
@@ -152,7 +152,8 @@ class User implements UserInterface, \JsonSerializable
             'password'  => $this->password,
             'idaccount' => $this->idAccount,
             'keyconfirmation' => $this->keyConfirmation,
-            'isconfirmed' => $this->isConfirmed
+            'isconfirmed' => $this->isConfirmed,
+            'md5password' => $this->md5Password
         ];
     }
 }
