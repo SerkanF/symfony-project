@@ -22,9 +22,6 @@ class User implements UserInterface, \JsonSerializable
      */
     private $email;
 
-    /**
-     * @ORM\Column(type="string")
-     */
     private $roles = [];
 
     /**

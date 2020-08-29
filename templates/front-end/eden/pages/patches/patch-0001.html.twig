@@ -1,0 +1,65 @@
+{% extends "front-end/eden/base.html.twig" %}
+
+{% block jsfiles %}
+
+
+{% endblock %}
+
+{% block jshead %}
+
+    <script>
+
+        function showSpoiler(idElement) {
+            jQuery("#"+idElement).toggleClass("displayBlock");
+            setTimeout(function() {
+                jQuery(".main").getNiceScroll().resize();
+            }, 200);
+        }
+
+    </script>
+
+{% endblock %}
+
+{% block body %} 
+
+    <div class="main-content">
+        
+        <div class="patches">
+
+            <h1>Patch note #0001</h1>
+
+            <h2 class="hover" onclick="showSpoiler('main-quest-fix')">Quêtes principales / Main quests</h2>
+
+            {% include "front-end/eden/pages/patches/patch-0001/main-quest.html.twig" %}
+
+            <h2 class="hover" onclick="showSpoiler('curi-quest-fix')">Quêtes Curi / Curi quests</h2>
+
+            {% include "front-end/eden/pages/patches/patch-0001/curi-quest.html.twig" %}
+
+            <h2 class="hover" onclick="showSpoiler('change-quest-fix')">Nouvelles récompenses des quêtes / New quests rewards</h2>
+
+            {% include "front-end/eden/pages/patches/patch-0001/new-recompense.html.twig" %}
+
+            <h2 class="hover" onclick="showSpoiler('cristal-beni-fix')">Cristal béni</h2>
+
+            {% include "front-end/eden/pages/patches/patch-0001/new-cristal-beni.html.twig" %}
+            
+            <h2 class="hover" onclick="showSpoiler('wb-fix')">World Boss</h2>
+
+            {% include "front-end/eden/pages/patches/patch-0001/new-world-boss.html.twig" %}
+
+            <h2 class="hover" onclick="showSpoiler('trial-items-fix')">Epées colossales et Katanas 50 55 60 (Greatsword and Katana 50 55 60)</h2>
+
+            {% include "front-end/eden/pages/patches/patch-0001/katana-greatsword-50-55-60.html.twig" %}
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    
+
+{% endblock %}

@@ -4,6 +4,8 @@
 /.env.local.php
 /.env.*.local
 /public/bundles/
+/public/NeuroSpace/
 /var/
 /vendor/
+
 ###< symfony/framework-bundle ###

@@ -53,9 +53,9 @@ class UserRestController extends AbfFrontAbstractController {
 
                 $password = $this->encoder->encodePassword(new User(), $formData['password']);
 
-                $req = 'INSERT INTO `user` (`id`, `email`, `roles`, `password`, `username`, `key_confirmation`, `is_confirmed`, `md5_password`)' 
+                $req = 'INSERT INTO `user` (`id`, `email`, `password`, `username`, `key_confirmation`, `is_confirmed`, `md5_password`)' 
                     . ' VALUES '
-                    . ' (null, "'.$formData['email'].'", "", "'.$password.'", "'.$formData['username'].'", "' . $key . '", 0, "'.md5($formData['password']).'");';
+                    . ' (null, "'.$formData['email'].'", "'.$password.'", "'.$formData['username'].'", "' . $key . '", 0, "'.md5($formData['password']).'");';
 
                 Util::executeInsertRequest($this->getDoctrine()->getConnection(), $req);
 
@@ -64,15 +64,20 @@ class UserRestController extends AbfFrontAbstractController {
                     ->to($formData['email']) // $formData['email']
                     ->subject("Confirmation")
                     ->html('<p> 
-                            <p>Bienvenu '.$formData['username'].' !</p>
+                            <p>Bienvenue '.$formData['username'].' !</p>
                             <p>Pour finir la création de votre compte, veuillez cliquer sur ce lien :</p>
                             <a href="http://edeneternal.to/validation/key/'.$key.'">Valider mon compte</a> 
+                        <p>
+                        <p> 
+                            <p>Welcome '.$formData['username'].' !</p>
+                            <p>To finish the creation of your account, please click on this link :</p>
+                            <a href="http://edeneternal.to/validation/key/'.$key.'">Validate my account</a> 
                         <p>');
 
                 $this->mailer->send($email);
 
                 $resp->setErrorCode(null);
-                $resp->setMessage("Le compte a été créé avec succès. Un email vous a été envoyé pour finaliser la création de votre compte");
+                $resp->setMessage("Le compte a été créé avec succès. Un de confirmation vous a été envoyé.");
                 $resp->setStatus(200);
                 $response->setStatusCode(200);
 

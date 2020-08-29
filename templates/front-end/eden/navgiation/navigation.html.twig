@@ -3,11 +3,18 @@
     <ul>
 
         <li class="nav-items">
-            <a href="/home">Accueil</a>
+            <a href="/">Accueil</a>
+        </li>
+
+        <li class="nav-items">
+            <a href="/packs">Packs</a>
+        </li>
+
+        <li class="nav-items">
+            <a href="/patchs">Patchs</a>
         </li>
 
         {% if user is defined and  user['username'] is defined and  user['username'] != null %}
-
             <li class="nav-items right">
                 <a href="/logout">Se déconnecter</a>
             </li>

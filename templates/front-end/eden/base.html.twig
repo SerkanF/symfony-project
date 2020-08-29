@@ -43,7 +43,12 @@
 
 {% endblock %}
 
-<div class="main">
+<div class="loader">
+        <div class="lds-ripple"><div></div><div></div></div>
+    </div>
+
+<div class="main">  
+
     {% block body %}
 
     {% endblock %}
@@ -57,10 +62,13 @@
 
 {% block javascripts %}
 
-    <script>
-        jQuery(".main").niceScroll();
-    </script>
-
 {% endblock %}
+
+<script>
+    setTimeout(function() {
+        jQuery(".main").niceScroll();
+    }, 1000);
+</script>
+
 </body>
 </html>

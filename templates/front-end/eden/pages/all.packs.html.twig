@@ -1,0 +1,131 @@
+{% extends "front-end/eden/base.html.twig" %}
+
+{% block jsfiles %}
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+{% endblock %}
+
+{% block jshead %}
+
+    <script>
+
+        var captcha = null;
+
+        function loadCaptcha() {	
+            captcha = grecaptcha.render('recaptcha', {
+                'sitekey' : '6Lc8KL0ZAAAAADLn0P34EMBbHb-WIX55bUYoxYl4',
+                'theme' : 'dark'
+            });
+        };
+
+        function reloadCaptcha() {
+            if(typeof grecaptcha !== 'undefined' && grecaptcha && grecaptcha.reset) { 
+                grecaptcha.reset(); 
+            }
+        }
+    
+        function sendPack(idPack) {
+
+            jQuery("#error-message").html("");
+            jQuery("#success-message").html("");
+
+            var dataToSend = {
+                'id_pack' : idPack,
+                'captcha' : grecaptcha.getResponse(captcha)
+            };
+
+            jQuery(".loader").addClass("show");
+
+            var xhr = jQuery.ajax({
+                type: "POST",
+                url: "/api/packs/",
+                contentType : 'application/json',
+                data : JSON.stringify(dataToSend),
+                dataType: "json"
+            });
+
+            xhr.done(function(data) {
+                jQuery(".loader").removeClass("show");
+                if (data.message != null) {
+                    jQuery("#success-message").html(data.message);
+                }
+                reloadCaptcha();
+            }).fail(function(data) {
+                jQuery(".loader").removeClass("show");
+                if (data.responseJSON != null) {
+                    jQuery("#error-message").html(data.responseJSON.message);
+                }
+                reloadCaptcha();
+            });
+        }
+
+    </script>
+
+{% endblock %}
+
+{% block body %} 
+
+    <div class="main-content">
+        
+        <div class="packs">
+
+            <h1>Packs disponible</h1>
+
+            <p>Vous devez être connecter pour recevoir les packs</p>
+
+            <div id="error-message" class="error"></div>
+
+            <div id="success-message" class="success"></div>
+
+            {% if packs is defined and packs != null %}
+                
+                    {% for pack in packs %}
+                        <div class="pack">
+                            <h3 class="pack-header">
+                                {{ pack.name_pack }}
+                            </h3>
+
+                            <div class="pack-content">
+                                <ul>
+                                    {% for item in pack.content %}
+                                        <li>- {{ item.name_item }} * {{ item.item_quantity }} </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                            <div class="pack-footer" onclick="sendPack({{ pack.id_pack }})">
+                                Recevoir le pack
+                            </div>
+
+                        </div>
+                    {% endfor %}
+
+                    <div class="clear"></div>
+
+                    <div class="form-group">
+                        <div id="recaptcha"></div>
+                    </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+        jQuery("#recaptcha").ready(function() {
+            setTimeout(function() {
+                loadCaptcha();
+            }, 500);
+            
+        });
+
+    </script>
+
+{% endblock %}

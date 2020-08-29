@@ -28,6 +28,22 @@ class HomeController extends AbfFrontAbstractController {
     }
 
     /**
+     * @Route(path="/launcher", name="launcher")
+     * @return 
+     */
+    public function launcher() {
+        return $this->renderCustomView('front-end/eden/pages/launcher.html.twig');
+    }
+
+    /**
+     * @Route(path="/NeuroSpace", name="neurospace")
+     * @return 
+     */
+    public function NeuroSpace() {
+        return $this->renderCustomView('front-end/eden/pages/launcher.html.twig');
+    }
+
+    /**
      * @Route(path="/register", name="register")
      * @return 
      */

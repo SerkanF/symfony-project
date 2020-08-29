@@ -29,16 +29,19 @@ class Validator {
         $confirmPassword = $array['confirm-password'];
         $captcha = $array['captcha'];
 
-        $regex = '/^[a-zA-Z0-9]+$/';
+        $regex = '/^[a-z0-9]+$/';
 
         $isValid = true;
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $pos1 = strpos($email, "@aeriagame");
+        $pos2 = strpos($email, "@aeria");
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $pos1 !== false || $pos2 !== false) {
             throw new Exception("L'adresse email est invalide");
         }
 
         if (!preg_match($regex, $username)) {
-            throw new Exception("Les caractères spéciaux ne sont pas autorisé.");
+            throw new Exception("Les caractères spéciaux et les majuscules ne sont pas autorisés.");
         }
 
         if ($password != $confirmPassword) {
@@ -51,6 +54,47 @@ class Validator {
 
         return $isValid;
 
+    }
+
+    public static function isPackIsValide($doctrine, $array, $userID) {
+
+        $captcha = $array['captcha'];
+
+        $isValid = true;
+
+        if (!Validator::isValidCaptcha($captcha)) {
+            throw new Exception("Le captcha est invalide.");
+        }
+
+        if (!is_integer($array['id_pack'])) {
+            throw new Exception("Le pack demandé n'est pas valide.");
+        }
+
+        if (!is_integer($userID)) {
+            throw new Exception("Le nom de compte n'est pas valide.");
+        }
+
+        if (!UserUtil::isUserExist($doctrine, $userID)) {
+            throw new Exception("Le nom de compte n'existe pas.");
+        }
+
+        $packFromDb = PackUtil::getPackById($doctrine, $array['id_pack']);
+
+        if ($packFromDb == null || empty($packFromDb)) {
+            throw new Exception("Le pack demandé n'existe pas.");
+        }
+
+        if (!isset($packFromDb[0]) || $packFromDb[0]['is_activated'] == null || $packFromDb[0]['is_activated'] == 0) {
+            throw new Exception("Le pack n'est pas activé.");
+        }
+
+        $datas = PackUtil::isPackIsSent($doctrine, $userID, (int) $array['id_pack']);
+
+        if (count($datas) > 0) {
+            throw new Exception("Le pack a déjà été envoyé.");
+        }
+
+        return $isValid;
     }
 
     public static function isValidCaptcha($value) {
@@ -78,8 +122,7 @@ class Validator {
         try {
             $fetchData = Util::executeSqlRequest($connexion, $sql);
         } catch (Exception $e) {
-            var_dump($e->getMessage());
-            throw new Exception("Une erreur interne est intervenu, contacter l'administrateur isAccountIsFreeInDefault");
+            throw new Exception("Une erreur est survenu, veuillez contacter l'administrateur.");
         }
 
         if (count($fetchData) >= 1) {
@@ -104,11 +147,11 @@ class Validator {
         try {
             $fetchData = Util::executeSqlRequest($connexion, $sql);
         } catch (Exception $e) {
-            throw new Exception("Une erreur interne est intervenu, contacter l'administrateur isAccountIsFreeInFnAccount");
+            throw new Exception("Une erreur est survenu, veuillez contacter l'administrateur.");
         }
 
         if (count($fetchData) >= 1) {
-            throw new Exception("Ce nom d'utilisateur déjà pris.");
+            throw new Exception("Ce nom de compte déjà pris.");
         } else {
             return true;
         }
@@ -128,7 +171,7 @@ class Validator {
         try {
             $fetchData = Util::executeSqlRequest($connexion, $sql);
         } catch (Exception $e) {
-            throw new Exception("Une erreur interne est intervenu, contacter l'administrateur isAccountIsFreeInFnMember");
+            throw new Exception("Une erreur est survenu, veuillez contacter l'administrateur.");
         }
 
         if (count($fetchData) >= 1) {
